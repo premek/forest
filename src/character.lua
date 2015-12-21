@@ -58,12 +58,21 @@ return require 'lib.hump.class' {
 
       local actualX, actualY, cols, _ = self.world:move(self, newPos.x, newPos.y, self.getCollisionType)
 
+      local original = {
+        grounded = self.grounded,
+        speed = self.speed:clone(),
+      }
+
       self.grounded = false -- no collisions, no jumping
 
       for _, col in ipairs(cols) do
         self:collideWith(col.other, col)
       end
       -- TODO some tollerance - to be able to jump up between 2 tiles
+
+      if self.grounded and not original.grounded then
+        self.world.shake = original.speed.y * .03 - .1 -- only for long jumps
+      end
 
       self.pos.x = actualX
       self.pos.y = actualY
@@ -98,7 +107,10 @@ return require 'lib.hump.class' {
     end
     if col.normal.y > 0 then
       -- head touched
-      self.speed.y = -.1 -- this is to allow jumping in a space of size of 1 tile -- increase to implement 'hold/stick to ceiling'
+      self.speed.y = -.1
+       -- this is to allow jumping in a space of size of 1 tile
+       -- increase to implement 'hold/stick to ceiling'
+       -- FIXME what is a good value in relation to gravity and jump speed
     end
     if col.normal.x ~= 0 then
       -- left or right touched

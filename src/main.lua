@@ -1,16 +1,20 @@
 local love = love
 local sti = require "lib.sti"
 local bump = require "lib.bump"
+local camera = require 'lib.hump.camera'
 local Character = require "character"
 require "util"
 
 local debug = true
 
-local map, world, player
+local map, world, player, cam
 
+local zoom, shake = 2, 0
 
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
+  cam = camera(0,0, zoom)
+
   love.graphics.setDefaultFilter("nearest")
   map = sti.new("map/green.lua", { "bump" })
   world = bump.newWorld()
@@ -42,11 +46,18 @@ end
 function love.update(dt)
   map:update(dt)
   player:update(dt)
+  world.shake = math.max(0, (world.shake or 0) - dt)
+  if world.shake > 0 then print(world.shake) end
 end
 
 function love.draw()
+  cam:lookAt(love.graphics.getWidth()*.5/zoom,love.graphics.getHeight()*.5/zoom)
+  cam:move(math.random(-world.shake*5,world.shake*5),
+           math.random(-world.shake*5,world.shake*5))
+
+  cam:attach()
   love.graphics.setColor(255, 255, 255, 255)
-  love.graphics.scale(2)
+  --love.graphics.scale(2)
   --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
   map:draw()
   player:draw()
@@ -59,6 +70,8 @@ function love.draw()
     love.graphics.setColor(0,255,0)
     love.graphics.line(player.pos.x, player.pos.y, player.pos.x+player.speed.x*10, player.pos.y+player.speed.y*10)
   end
+
+  cam:detach()
 
 end
 
