@@ -10,6 +10,7 @@ local map, world, player
 
 
 function love.load()
+  if arg[#arg] == "-debug" then require("mobdebug").start() end
   love.graphics.setDefaultFilter("nearest")
   map = sti.new("map/green.lua", { "bump" })
   world = bump.newWorld()

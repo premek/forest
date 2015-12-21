@@ -68,7 +68,7 @@ return require 'lib.hump.class' {
         end
         if col.normal.y > 0 then
           -- head touched
-          self.speed.y = 0
+          self.speed.y = -.1 -- this is to allow jumping in a space of size of 1 tile -- increase to implement 'hold/stick to ceiling'
         end
         if col.normal.x ~= 0 then
           -- left or right touched
