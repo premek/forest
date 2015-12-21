@@ -40,6 +40,13 @@ return {
         {
           id = 1,
           terrain = { -1, -1, 0, -1 }
+        },
+        {
+          id = 16,
+          properties = {
+            ["collectible"] = "true",
+            ["item"] = "redkey"
+          }
         }
       }
     }
@@ -74,7 +81,7 @@ return {
     },
     {
       type = "tilelayer",
-      name = "collidable",
+      name = "ground",
       x = 0,
       y = 0,
       width = 13,
@@ -103,14 +110,16 @@ return {
     },
     {
       type = "tilelayer",
-      name = "front",
+      name = "objects",
       x = 0,
       y = 0,
       width = 13,
       height = 13,
       visible = true,
       opacity = 1,
-      properties = {},
+      properties = {
+        ["collidable"] = "true"
+      },
       encoding = "lua",
       data = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

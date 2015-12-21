@@ -47,3 +47,14 @@ function print_r ( t )
     end
     print()
 end
+
+
+function Proxy(f)
+  return setmetatable({}, {__index = function(self, k)
+    local v = f(k)
+    rawset(self, k, v)
+    return v
+  end})
+end
+
+--Image = Proxy(function(k) return love.graphics.newImage('img/' .. k .. '.png') end)
