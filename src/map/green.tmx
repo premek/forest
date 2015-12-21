@@ -10,10 +10,13 @@
  </tileset>
  <layer name="sky" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBzFo3gQYwDjGACq
+   eJyTY2BgkBvFo3gQYwBRwhPP
   </data>
  </layer>
- <layer name="unwalkable" width="13" height="13">
+ <layer name="collidable" width="13" height="13">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJydkeEKgCAMhIeZVhRY/qre/z1TMDiOmZhwuE0+uJtGRJYOmaRJ+o6rMAHqnWYaMyZZqAeSV5g1aYM6+6/lCaKf8yMPvyETG4yWwTYYRxn4P5C5lBn32QPu7S437u2g/vUwK/5r8oX5owd2PANO
   </data>
