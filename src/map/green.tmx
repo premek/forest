@@ -18,12 +18,12 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJydkeEKgCAMhIeZVhRY/qre/z1TMDiOmZhwuE0+uJtGRJYOmaRJ+o6rMAHqnWYaMyZZqAeSV5g1aYM6+6/lCaKf8yMPvyETG4yWwTYYRxn4P5C5lBn32QPu7S437u2g/vUwK/5r8oX5owd2PANO
+   eJxjYmBg4CIBMwExBwNpgA2HHgE8Ytj0sAIxCxKbGQ2zY9HDA8S8SGyQ+3H5B5t7QEASjY/sNnQ5UvRg8wMLAT1saH5Ajw9kPVJYxND5IDcgh5s0lEYON3Q+zA2cWNyPC7ND9ZCDATEIAxg=
   </data>
  </layer>
  <layer name="front" width="13" height="13">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF1AQCg1jPUAUAOKQAMQ==
+   eJxjYBgcQHCgHUAlIIDEFiZDDzn20BoI0dEubAAAfdgAZw==
   </data>
  </layer>
 </map>

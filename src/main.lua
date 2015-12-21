@@ -17,25 +17,25 @@ function love.load()
   player = Character(world, "img/shaman.png", 64, 64)
 
   map:addCustomLayer("Sprite Layer", 3)
-    -- Add data to Custom Layer
-    local spriteLayer = map.layers["Sprite Layer"]
-    spriteLayer.sprites = {player}
+  -- Add data to Custom Layer
+  local spriteLayer = map.layers["Sprite Layer"]
+  spriteLayer.sprites = {player}
 
-    -- Update callback for Custom Layer
-    function spriteLayer:update(dt)
-        for _, sprite in pairs(self.sprites) do
-            --sprite.r = sprite.r + math.rad(90 * dt)
-        end
+  -- Update callback for Custom Layer
+  function spriteLayer:update(dt)
+    for _, sprite in pairs(self.sprites) do
+      --sprite.r = sprite.r + math.rad(90 * dt)
     end
+  end
 
-    -- Draw callback for Custom Layer
-    function spriteLayer:draw()
-        for _, sprite in pairs(self.sprites) do
-            --local x = math.floor(sprite.pos.x)
-            --local y = math.floor(sprite.y)
-            --love.graphics.draw(sprite.image, x, y)
-        end
+  -- Draw callback for Custom Layer
+  function spriteLayer:draw()
+    for _, sprite in pairs(self.sprites) do
+      --local x = math.floor(sprite.pos.x)
+      --local y = math.floor(sprite.y)
+      --love.graphics.draw(sprite.image, x, y)
     end
+  end
 end
 
 function love.update(dt)
@@ -52,7 +52,7 @@ function love.draw()
 
   if debug then
     love.graphics.setColor(255, 0, 0, 255)
-    for k, v in ipairs(world:getItems()) do
+    for _, v in ipairs(world:getItems()) do
       love.graphics.rectangle("line", world:getRect(v))
     end
     love.graphics.setColor(0,255,0)

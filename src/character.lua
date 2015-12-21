@@ -41,6 +41,7 @@ return require 'lib.hump.class' {
     --self.speed.y = self.speed.y * .8
 
 
+    -- TODO where to use DT and where not?
     if self.grounded and love.keyboard.isDown('up') then
       self.speed.y = self.speed.y - 4
     end
@@ -55,7 +56,7 @@ return require 'lib.hump.class' {
 
     if self.speed:len() ~= 0 then
 
-      local actualX, actualY, cols, colsNum = self.world:move(self, newPos.x, newPos.y)
+      local actualX, actualY, cols, _ = self.world:move(self, newPos.x, newPos.y)
 
       self.grounded = false -- no collisions, no jumping
 
