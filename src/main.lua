@@ -2,14 +2,15 @@ local love = love
 local sti = require "lib.sti"
 local bump = require "lib.bump"
 local camera = require 'lib.hump.camera'
-local Character = require "character"
+local Shaman = require "char.shaman"
+local Flappyflap = require "char.flappyflap"
 require "util"
 
-local debug = true
+local debug = false
 
-local map, world, player, cam
+local map, world, chars, cam
 
-local zoom, shake = 2, 0
+local zoom = 2
 
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
@@ -19,12 +20,18 @@ function love.load()
   map = sti.new("map/green.lua", { "bump" })
   world = bump.newWorld()
   map:bump_init(world) 	--- Adds each collidable tile to the Bump world.
-  player = Character(world, "img/shaman.png", 64, 64)
+  chars = {
+    Shaman(world, "img/shaman.png", 64, 64),
+    Flappyflap(world, "img/flappyflap.png", 96, 64),
+  }
+  chars[1].isControlled = true
 
   map:addCustomLayer("Sprite Layer", 3)
   -- Add data to Custom Layer
   local spriteLayer = map.layers["Sprite Layer"]
-  spriteLayer.sprites = {player}
+  spriteLayer.sprites = {
+    --player
+  }
 
   -- Update callback for Custom Layer
   function spriteLayer:update(dt)
@@ -45,38 +52,58 @@ end
 
 function love.update(dt)
   map:update(dt)
-  player:update(dt)
+  for _,char in ipairs(chars) do char:update(dt) end
+
   world.shake = math.max(0, (world.shake or 0) - dt)
-  if world.shake > 0 then print(world.shake) end
+end
+
+
+local drawVector = function(r,g,b, w, pos, v)
+love.graphics.setLineWidth(w)
+love.graphics.setColor(r,g,b)
+love.graphics.line(pos.x, pos.y, pos.x+v.x*10, pos.y+v.y*10)
 end
 
 function love.draw()
   cam:lookAt(love.graphics.getWidth()*.5/zoom,love.graphics.getHeight()*.5/zoom)
-  cam:move(math.random(-world.shake*5,world.shake*5),
-           math.random(-world.shake*5,world.shake*5))
+  cam:move(math.random(-world.shake*2,world.shake*2),
+           math.random(-world.shake*13,world.shake*13)) -- FIXME decreasing amptitude, not random
 
   cam:attach()
   love.graphics.setColor(255, 255, 255, 255)
   --love.graphics.scale(2)
   --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
   map:draw()
-  player:draw()
+  for _,char in ipairs(chars) do
+    char:draw()
+  end
 
   if debug then
+    love.graphics.setLineWidth(.5)
     love.graphics.setColor(255, 0, 0, 255)
     for _, v in ipairs(world:getItems()) do
       love.graphics.rectangle("line", world:getRect(v))
     end
-    love.graphics.setColor(0,255,0)
-    love.graphics.line(player.pos.x, player.pos.y, player.pos.x+player.speed.x*10, player.pos.y+player.speed.y*10)
+    for _, ch in ipairs(chars) do
+      drawVector(0,255,0, 2, ch.pos, ch.speed)
+    end
   end
 
   cam:detach()
 
 end
 
+
+local switchPlayer = (function(current)
+  return function()
+    chars[current].isControlled = false
+    current = (current%#chars)+1
+    chars[current].isControlled = true
+  end
+end)(1) -- muhehehehe
+
 function love.keypressed(key)
-  if key=='tab' then print("PL") end
+  if key=='tab' then switchPlayer() end
   if key=='d' then debug = not debug end
   if key=='escape' then love.event.quit() end
 end
