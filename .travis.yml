@@ -1,22 +1,19 @@
 language: bash
 sudo: false
 install: true
-
 addons:
   apt:
     packages:
     - lua5.1
-    
 script: "./build.sh"
-
-deploy:
+odeploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: o45lzoIW8DDkihKFuWqoN1m95DQAX4Wc5153wW4enyUmthlV2LqnFAwQPsa/J2+jD+2dFjbVuA1dz/sblhUlp1fsHXp997v2s/pAw1mDSdCIb8ol/qMzMzbCgaDqDEZkAOZBnrl7+fa66IXkWxcNBxEStTlXox1TKxK872FjOvtrMdFsbcb67qbcbFzvYeMjvDxTnjX2sUVdRa1oS2Z8mzNs9QHXyQf0HGaWPtCvRvrv4lKR+NpJ9PZ19tZFwKwj0OMHRvU8KkNN7ymP7C4fxoxoiBBU1y/6ne4MJmG8mH819y/WR8UyQNl14tLagzFYF840LXpqWqV3OeSg6LUUqI7D6QSk0RdDf+PR4nUmfSDz1gZXxC56jduIIbpahlLteJ7HJ5MzLQjx8yxWArT7iqbL6KLAsOvB9+/gcCWhi0YXhB7yWC0qYXkYCcBBXxKt9FOPCGDkgfXFfcclIoJ6wVdcoVpVjsgqYQtTI8Nth3fmiKFaC3qJ/VzM09djdjV6citRTLtovOWAAm8iIud6ZNrYvRKx7lIEpbkFb8MLkLqJe2N7Ph26l353Fgicui6gn1D66v+A+xlCcluK98WS2sY9PRVimGsXyDt00vvc5vMFZuLDeQbPW0OFl+IYNP/MTGGQW8eL4aAwgEKj0mYmIuS/ly+bF8TOimWQlJ1zgec=
-  file: 
-    - "Forest.love"
-    - "Forest.zip"
+    secure: gfI4KTCBUJ6lzK4KN1/GPqnQngq5I1+cSHBQ3Onmr5jiu363cE2bT+WMNPr1lnLdJe89/vNh0uFhug24PHG+K2BMdxneD3FIKwEPsqSE4WW0hWce22RoGKTn/b1v11tNXi2BReI4zpbliAuSaRtM+SKBceqvii1P4EV1n3BWv8lV6YhYKrcMqiz+H5QHqmfY7pkahdCet9+L4zm1NkFw80XLjoAmbOGh97IWOKNT5803tqkbFYg22iiS7ikexntNfWOVBYvwL/KHJUsbNPVjwEEBbZfFHeZKwnDXsgqCgHbX25f9SFUOD9FQoKCnnioUfPNyLQn+Dk2mK1L+JE/IBCqDY7eKe9JulX3x1yVAy56PPgWslmiCMLaih0zCLv/3r0OoC+zV/1vE2X+VbvhRtSdCG4qJ0GqCqmAQlgLaDnDG0X5hnl2MZ2OpmBZfsnmu56wtf4svIp4drTCuab5a+GbrgSWE9rEihGO8AxUAIQkv50SRlhZCo+TR2pMgokHeOA4YG72b5yK6W5oRx0F3s2hlzwFwmTeYlU1VCq0nlsL79JWfjQL1JgjprvpcCGlYKuDL6vY+BZQl4x0z2+0dw/j1H7xGJFVs6Rvj92tNZs0KxoXU39rqQS89yYZ4hlXCzulR2H8SiZpYzCDLGtP7BSjDrq6sC8uL/1AWNQZyh1k=
+  file:
+  - Forest.love
+  - Forest.zip
   on:
     tags: true
     all_branches: true
