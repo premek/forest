@@ -14,6 +14,7 @@ local zoom = 2
 
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
+
   cam = camera(0,0, zoom)
 
   love.graphics.setDefaultFilter("nearest")
@@ -28,26 +29,26 @@ function love.load()
 
   map:addCustomLayer("Sprite Layer", 3)
   -- Add data to Custom Layer
-  local spriteLayer = map.layers["Sprite Layer"]
-  spriteLayer.sprites = {
-    --player
-  }
+  --local spriteLayer = map.layers["Sprite Layer"]
+  --spriteLayer.sprites = {
+  --  --player
+  --}
 
   -- Update callback for Custom Layer
-  function spriteLayer:update(dt)
-    for _, sprite in pairs(self.sprites) do
-      --sprite.r = sprite.r + math.rad(90 * dt)
-    end
-  end
+  --function spriteLayer:update(dt)
+  --  for _, sprite in pairs(self.sprites) do
+  --    --sprite.r = sprite.r + math.rad(90 * dt)
+  --  end
+  --end
 
   -- Draw callback for Custom Layer
-  function spriteLayer:draw()
-    for _, sprite in pairs(self.sprites) do
-      --local x = math.floor(sprite.pos.x)
-      --local y = math.floor(sprite.y)
-      --love.graphics.draw(sprite.image, x, y)
-    end
-  end
+  --function spriteLayer:draw()
+  --  for _, sprite in pairs(self.sprites) do
+  --    --local x = math.floor(sprite.pos.x)
+  --    --local y = math.floor(sprite.y)
+  --    --love.graphics.draw(sprite.image, x, y)
+  --  end
+  --end
 end
 
 function love.update(dt)

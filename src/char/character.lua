@@ -88,24 +88,24 @@ return require 'lib.hump.class' {
       1)
 
 
-    if self.isControlled then
-      love.graphics.setColor(255,255,255, 10)
-      love.graphics.setLineWidth(7)
-      love.graphics.circle("line",
-        self.pos.x + self.size.x/2,
-        self.pos.y  + self.size.x/2,
-        self.size.x*.9)
-    end
-
-    if false and self.isControlled then
-      love.graphics.setColor(0,255,0)
-      love.graphics.setLineWidth(2)
-      love.graphics.line(
-        self.pos.x + 4,
-        self.pos.y - 8,
-        self.pos.x + self.size.x - 4,
-        self.pos.y-8)
-    end
+    -- if false and self.isControlled then
+    --   love.graphics.setColor(0,50,0, 20)
+    --   love.graphics.setLineWidth(7)
+    --   love.graphics.circle("line",
+    --     self.pos.x + self.size.x/2,
+    --     self.pos.y  + self.size.x/2,
+    --     self.size.x*.9)
+    -- end
+    --
+    -- if false and self.isControlled then
+    --   love.graphics.setColor(0,255,0)
+    --   love.graphics.setLineWidth(2)
+    --   love.graphics.line(
+    --     self.pos.x + 4,
+    --     self.pos.y - 8,
+    --     self.pos.x + self.size.x - 4,
+    --     self.pos.y-8)
+    -- end
   end
 }
 

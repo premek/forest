@@ -1,9 +1,8 @@
 local love = love
-local Character = require "char.character"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 
 return require 'lib.hump.class' {
-  __includes = {Character},
+  __includes = {require "char.character"},
 
   --init = function(self, world, img, x, y)
   --  Character.init(self, world, img, x, y)
@@ -23,10 +22,10 @@ return require 'lib.hump.class' {
     if love.keyboard.isDown('up') then
       self.speed.y = self.speed.y - .2
     end
-    if love.keyboard.isDown('left') then
+    if not self.grounded and love.keyboard.isDown('left') then
       self.speed.x = self.speed.x - .4
     end
-    if love.keyboard.isDown('right') then
+    if not self.grounded and love.keyboard.isDown('right') then
       self.speed.x = self.speed.x + .4
     end
   end,
