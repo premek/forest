@@ -6,7 +6,7 @@ addons:
     packages:
     - lua5.1
 script: "./build.sh"
-odeploy:
+deploy:
   provider: releases
   skip_cleanup: true
   api_key:
