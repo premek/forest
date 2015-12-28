@@ -1,9 +1,7 @@
 local love = love
-local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 
 return require 'lib.hump.class' {
   __includes = {require "char.character"},
-  speed = vector(0,0),
 
   animate = function(self, dt)
     if self.grounded and self.speed.x ~= 0 then
@@ -27,16 +25,8 @@ return require 'lib.hump.class' {
     end
   end,
 
-  getCollisionType = function(item, other)
-    if other.properties and other.properties.collectible then return 'cross'
-    else return "slide"
-    end
-    --if     other.isCoin   then return 'cross'
-    --elseif other.isWall   then return 'slide'
-    --elseif other.isExit   then return 'touch'
-    --elseif other.isSpring then return 'bounce'
-    --end
-    -- else return nil
+  action = function(self, item, action)
+    if(action == "level") then love.event.quit() end
   end,
 
   collideWith = function(self, other, col)

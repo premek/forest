@@ -62,9 +62,10 @@ return require 'lib.hump.class' {
       self.grounded = false -- no collisions, no jumping
 
       for _, col in ipairs(cols) do
-        if not self:collect(col.other) then
-          self:collideWith(col.other, col)
-        end
+        local _ = false
+        or self:callAction(col.other)
+        or self:collect(col.other)
+        or self:collideWith(col.other, col)
       end
       -- TODO some tollerance
       -- to be able to jump up between 2 tiles
@@ -82,10 +83,22 @@ return require 'lib.hump.class' {
 
   end,
 
+  getCollisionType = function(item, other)
+    if other.properties and other.properties.action then return 'cross'
+    else return "slide"
+    end
+    --if     other.isCoin   then return 'cross'
+    --elseif other.isWall   then return 'slide'
+    --elseif other.isExit   then return 'touch'
+    --elseif other.isSpring then return 'bounce'
+    --end
+    -- else return nil
+  end,
+
   collect = function(self, item)
     if item.layer and item.layer.name == "objects"
       and item.properties and item.properties.collect then
-        
+
       local mapx, mapy = self.map:convertScreenToTile(item.x, item.y)
       mapx, mapy = mapx + 1, mapy + 1
       self.world:remove(item)
@@ -95,6 +108,18 @@ return require 'lib.hump.class' {
 
       return true
     end
+  end,
+
+  callAction = function(self, item)
+    if item.layer and item.layer.name == "objects"
+      and item.properties and item.properties.action then
+        self:action(item, item.properties.action)
+      return true
+    end
+  end,
+
+  action = function(self, item, action)
+    print("Action " .. action)
   end,
 
   draw = function(self)

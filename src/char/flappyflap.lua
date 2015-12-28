@@ -1,5 +1,4 @@
 local love = love
-local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 
 return require 'lib.hump.class' {
   __includes = {require "char.character"},
@@ -22,24 +21,12 @@ return require 'lib.hump.class' {
     if love.keyboard.isDown('up') then
       self.speed.y = self.speed.y - .2
     end
-    if not self.grounded and love.keyboard.isDown('left') then
+    if love.keyboard.isDown('left') then
       self.speed.x = self.speed.x - .4
     end
-    if not self.grounded and love.keyboard.isDown('right') then
+    if love.keyboard.isDown('right') then
       self.speed.x = self.speed.x + .4
     end
-  end,
-
-  getCollisionType = function(item, other)
-    if other.properties and other.properties.collectible then return 'cross'
-    else return "slide"
-    end
-    --if     other.isCoin   then return 'cross'
-    --elseif other.isWall   then return 'slide'
-    --elseif other.isExit   then return 'touch'
-    --elseif other.isSpring then return 'bounce'
-    --end
-    -- else return nil
   end,
 
   collideWith = function(self, other, col)
