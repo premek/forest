@@ -24,13 +24,13 @@ function print_r ( t )
             if (type(t)=="table") then
                 for pos,val in pairs(t) do
                     if (type(val)=="table") then
-                        print(indent.."["..pos.."] => "..tostring(t).." {")
-                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
-                        print(indent..string.rep(" ",string.len(pos)+6).."}")
+                        print(indent.."["..tostring(pos).."] => "..tostring(t).." {")
+                        sub_print_r(val,indent..string.rep(" ",string.len(tostring(pos))+8))
+                        print(indent..string.rep(" ",string.len(tostring(pos))+6).."}")
                     elseif (type(val)=="string") then
-                        print(indent.."["..pos..'] => "'..val..'"')
+                        print(indent.."["..tostring(pos)..'] => "'..val..'"')
                     else
-                        print(indent.."["..pos.."] => "..tostring(val))
+                        print(indent.."["..tostring(pos).."] => "..tostring(val))
                     end
                 end
             else

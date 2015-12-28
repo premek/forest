@@ -11,9 +11,11 @@ return require 'lib.hump.class' {
   facing = 1,
   grounded = false,
   isControlled = false,
+  inventory = {},
 
-  init = function(self, world, img, x, y, w, h)
+  init = function(self, world, map, img, x, y, w, h)
     self.world = world
+    self.map = map
     self.img = img
     self.pos = vector(x or 0, y or 0)
     self.size = vector(w or 32, h or 32)
@@ -60,7 +62,9 @@ return require 'lib.hump.class' {
       self.grounded = false -- no collisions, no jumping
 
       for _, col in ipairs(cols) do
-        self:collideWith(col.other, col)
+        if not self:collect(col.other) then
+          self:collideWith(col.other, col)
+        end
       end
       -- TODO some tollerance
       -- to be able to jump up between 2 tiles
@@ -70,11 +74,27 @@ return require 'lib.hump.class' {
       self.pos.y = actualY
 
       if self.grounded and not original.grounded then
+        -- FIXME store somewhere else than in "world"
         self.world.shake = original.speed.y * .07 - .2 -- only for long jumps
       end
 
     end
 
+  end,
+
+  collect = function(self, item)
+    if item.layer and item.layer.name == "objects"
+      and item.properties and item.properties.collect then
+        
+      local mapx, mapy = self.map:convertScreenToTile(item.x, item.y)
+      mapx, mapy = mapx + 1, mapy + 1
+      self.world:remove(item)
+      self.map.layers.objects.data[mapy][mapx] = nil
+      self.map:setSpriteBatches(self.map.layers.objects)
+      self.inventory[item.properties.collect] = (self.inventory[item.properties.collect] or 0) + 1
+
+      return true
+    end
   end,
 
   draw = function(self)
@@ -86,7 +106,6 @@ return require 'lib.hump.class' {
       0,
       self.facing or 1,
       1)
-
 
     -- if false and self.isControlled then
     --   love.graphics.setColor(0,50,0, 20)
@@ -108,8 +127,3 @@ return require 'lib.hump.class' {
     -- end
   end
 }
-
---D = Class{__includes = {A,B}}
---instance = D()
---instance:foo() -- prints 'foo'
---instance:bar() -- prints 'bar'

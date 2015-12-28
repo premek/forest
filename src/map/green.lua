@@ -28,7 +28,22 @@ return {
       terrains = {},
       tiles = {
         {
+          id = 15,
+          properties = {
+            ["collect"] = "box"
+          }
+        },
+        {
+          id = 17,
+          properties = {
+            ["action"] = "button"
+          }
+        },
+        {
           id = 18,
+          properties = {
+            ["action"] = "level"
+          },
           objectGroup = {
             type = "objectgroup",
             name = "",
@@ -41,8 +56,7 @@ return {
         {
           id = 29,
           properties = {
-            ["collectible"] = "true",
-            ["item"] = "redkey"
+            ["collect"] = "redkey"
           },
           animation = {
             {
@@ -118,7 +132,7 @@ return {
         8, 0, 25, 0, 5, 3, 3, 3, 3, 4, 0, 0, 6,
         8, 0, 25, 0, 6, 2, 10, 10, 2, 8, 0, 0, 6,
         8, 0, 26, 0, 6, 8, 0, 0, 6, 8, 0, 5, 7,
-        8, 0, 27, 0, 12, 13, 0, 0, 12, 13, 0, 6, 2,
+        8, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
         9, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 7, 2,
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
       }

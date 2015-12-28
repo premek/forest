@@ -1,9 +1,8 @@
 local love = love
-local Character = require "char.character"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 
 return require 'lib.hump.class' {
-  __includes = {Character},
+  __includes = {require "char.character"},
   speed = vector(0,0),
 
   animate = function(self, dt)
@@ -41,11 +40,6 @@ return require 'lib.hump.class' {
   end,
 
   collideWith = function(self, other, col)
-    if other.properties and other.properties.collectible then
-      print("Collect", other.properties.item, other.x, other.y) -- TODO -- FIXME walking is wierd here
-      return
-    end
-
     if col.normal.y < 0 then
       -- feet touched
       self.speed.y = 0

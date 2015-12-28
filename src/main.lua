@@ -15,6 +15,7 @@ local zoom = 2
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
 
+  love.graphics.setNewFont( 10 )
   cam = camera(0,0, zoom)
 
   love.graphics.setDefaultFilter("nearest")
@@ -22,12 +23,12 @@ function love.load()
   world = bump.newWorld()
   map:bump_init(world) 	--- Adds each collidable tile to the Bump world.
   chars = {
-    Shaman(world, "img/shaman.png", 64, 64),
-    Flappyflap(world, "img/flappyflap.png", 96, 64),
+    Shaman(world, map, "img/shaman.png", 64, 64),
+    Flappyflap(world, map, "img/flappyflap.png", 96, 64),
   }
   chars[1].isControlled = true
 
-  map:addCustomLayer("Sprite Layer", 3)
+  --map:addCustomLayer("Sprite Layer", 3)
   -- Add data to Custom Layer
   --local spriteLayer = map.layers["Sprite Layer"]
   --spriteLayer.sprites = {
@@ -87,6 +88,15 @@ function love.draw()
     end
     for _, ch in ipairs(chars) do
       drawVector(0,255,0, 2, ch.pos, ch.speed)
+
+      love.graphics.setColor(0,0,255, 255)
+      love.graphics.print("Inventory:", ch.pos.x, ch.pos.y+ch.size.y)
+      local li=1
+
+      for item, amount in pairs(ch.inventory) do
+        love.graphics.print(item .. " x"..amount, ch.pos.x, ch.pos.y+ch.size.y+li*10)
+        li = li + 1
+      end
     end
   end
 

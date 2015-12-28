@@ -2,13 +2,25 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="4">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
+  <tile id="15">
+   <properties>
+    <property name="collect" value="box"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="action" value="button"/>
+   </properties>
+  </tile>
   <tile id="18">
+   <properties>
+    <property name="action" value="level"/>
+   </properties>
    <objectgroup draworder="index"/>
   </tile>
   <tile id="29">
    <properties>
-    <property name="collectible" value="true"/>
-    <property name="item" value="redkey"/>
+    <property name="collect" value="redkey"/>
    </properties>
    <animation>
     <frame tileid="29" duration="150"/>
@@ -28,7 +40,7 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYmBg4CIBMwExBwNpgA2HHgE8Ytj0sAIxCxKbGQ2zY9HDA8S8SGyQ+3H5B5t7QEASjY/sNnQ5UvRg8wMLAT1saH5Ajw9kPVJYxND5IDcgh5s0lEYON3Q+zA2cWNyPC7ND9ZCDATEIAxg=
+   eJxjYmBg4CIBMwExBwNpgA2HHgE8Ytj0sAIxCxKbGQ2zY9HDA8S8SGyQ+3H5B5t7QEASjY/sNnQ5UvRg8wMLAT1saH5Ajw9kPVJYxND5IDcgh5s0Dv+g+wVkLycW9+PC7FA95GAAF6gC5g==
   </data>
  </layer>
  <layer name="objects" width="13" height="13">
