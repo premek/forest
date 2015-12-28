@@ -26,7 +26,7 @@ return require 'lib.hump.class' {
   end,
 
   action = function(self, item, action)
-    if(action == "level") then love.event.quit() end
+    if(action == "finish") then love.event.quit() end
   end,
 
   collideWith = function(self, other, col)

@@ -84,7 +84,7 @@ return require 'lib.hump.class' {
   end,
 
   getCollisionType = function(item, other)
-    if other.properties and other.properties.action then return 'cross'
+    if other.type == "action" then return 'cross'
     else return "slide"
     end
     --if     other.isCoin   then return 'cross'
@@ -97,23 +97,23 @@ return require 'lib.hump.class' {
 
   collect = function(self, item)
     if item.layer and item.layer.name == "objects"
-      and item.properties and item.properties.collect then
-
-      local mapx, mapy = self.map:convertScreenToTile(item.x, item.y)
-      mapx, mapy = mapx + 1, mapy + 1
-      self.world:remove(item)
-      self.map.layers.objects.data[mapy][mapx] = nil
-      self.map:setSpriteBatches(self.map.layers.objects)
-      self.inventory[item.properties.collect] = (self.inventory[item.properties.collect] or 0) + 1
-
-      return true
+      and item.type == "collect" then
+        self.world:remove(item)
+        self.inventory[item.name] = (self.inventory[item.name] or 0) + 1
+        for k,v in pairs(self.map.layers.objects.objects) do
+          if v.id == item.id then
+            table.remove(self.map.layers.objects.objects, k)
+          end
+        end
+        self.map:setObjectSpriteBatches(self.map.layers.objects)
+        return true
     end
   end,
 
   callAction = function(self, item)
     if item.layer and item.layer.name == "objects"
-      and item.properties and item.properties.action then
-        self:action(item, item.properties.action)
+      and item.type == "action" then
+        self:action(item, item.name)
       return true
     end
   end,

@@ -7,7 +7,7 @@ return {
   height = 13,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 4,
+  nextobjectid = 11,
   properties = {},
   tilesets = {
     {
@@ -28,22 +28,7 @@ return {
       terrains = {},
       tiles = {
         {
-          id = 15,
-          properties = {
-            ["collect"] = "box"
-          }
-        },
-        {
-          id = 17,
-          properties = {
-            ["action"] = "button"
-          }
-        },
-        {
           id = 18,
-          properties = {
-            ["action"] = "level"
-          },
           objectGroup = {
             type = "objectgroup",
             name = "",
@@ -55,9 +40,6 @@ return {
         },
         {
           id = 29,
-          properties = {
-            ["collect"] = "redkey"
-          },
           animation = {
             {
               tileid = "29",
@@ -131,39 +113,63 @@ return {
         8, 0, 25, 0, 0, 0, 0, 0, 25, 0, 0, 0, 6,
         8, 0, 25, 0, 5, 3, 3, 3, 3, 4, 0, 0, 6,
         8, 0, 25, 0, 6, 2, 10, 10, 2, 8, 0, 0, 6,
-        8, 0, 26, 0, 6, 8, 0, 0, 6, 8, 0, 5, 7,
+        8, 0, 26, 0, 12, 13, 0, 0, 12, 13, 0, 5, 7,
         8, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
         9, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 7, 2,
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
       }
     },
     {
-      type = "tilelayer",
+      type = "objectgroup",
       name = "objects",
-      x = 0,
-      y = 0,
-      width = 13,
-      height = 13,
       visible = true,
       opacity = 1,
       properties = {
         ["collidable"] = "true"
       },
-      encoding = "lua",
-      data = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 16, 0, 0, 19, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      objects = {
+        {
+          id = 4,
+          name = "redkey",
+          type = "collect",
+          shape = "rectangle",
+          x = 128,
+          y = 96,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 30,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 7,
+          name = "finish",
+          type = "action",
+          shape = "rectangle",
+          x = 288,
+          y = 224,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 19,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 8,
+          name = "open",
+          type = "action",
+          shape = "rectangle",
+          x = 224,
+          y = 352,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 18,
+          visible = true,
+          properties = {}
+        }
       }
     }
   }

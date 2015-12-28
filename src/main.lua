@@ -82,8 +82,11 @@ function love.draw()
 
   if debug then
     love.graphics.setLineWidth(.5)
-    love.graphics.setColor(255, 0, 0, 255)
     for _, v in ipairs(world:getItems()) do
+      local b = v.layer and v.layer.name == "objects" and 255 or 0;
+      love.graphics.setColor(255, 0, b, 20)
+      love.graphics.rectangle("fill", world:getRect(v))
+      love.graphics.setColor(255, 0, b)
       love.graphics.rectangle("line", world:getRect(v))
     end
     for _, ch in ipairs(chars) do

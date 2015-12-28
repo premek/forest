@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="11">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
-  <tile id="15">
-   <properties>
-    <property name="collect" value="box"/>
-   </properties>
-  </tile>
-  <tile id="17">
-   <properties>
-    <property name="action" value="button"/>
-   </properties>
-  </tile>
   <tile id="18">
-   <properties>
-    <property name="action" value="level"/>
-   </properties>
    <objectgroup draworder="index"/>
   </tile>
   <tile id="29">
-   <properties>
-    <property name="collect" value="redkey"/>
-   </properties>
    <animation>
     <frame tileid="29" duration="150"/>
     <frame tileid="30" duration="150"/>
@@ -40,15 +24,15 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYmBg4CIBMwExBwNpgA2HHgE8Ytj0sAIxCxKbGQ2zY9HDA8S8SGyQ+3H5B5t7QEASjY/sNnQ5UvRg8wMLAT1saH5Ajw9kPVJYxND5IDcgh5s0Dv+g+wVkLycW9+PC7FA95GAAF6gC5g==
+   eJxjYmBg4CIBMwExBwNpgA2HHgE8Ytj0sAIxCxKbGQ2zY9HDA8S8SGyQ+3H5B5t7QEASjY/sNnQ5UvRg8wMLAT1saH5Ajw9kPVJQGjkM0PkgNyCHmzQO/6D7BWQvJxb348LsUD3kYAAnUAL8
   </data>
  </layer>
- <layer name="objects" width="13" height="13">
+ <objectgroup name="objects">
   <properties>
    <property name="collidable" value="true"/>
   </properties>
-  <data encoding="base64" compression="zlib">
-   eJxjYBgcQG6gHUAlIIDEFiZDDzn20BoI0dEubAAAmUQAdA==
-  </data>
- </layer>
+  <object id="4" name="redkey" type="collect" gid="30" x="128" y="96" width="32" height="32"/>
+  <object id="7" name="finish" type="action" gid="19" x="288" y="224" width="32" height="32"/>
+  <object id="8" name="open" type="action" gid="18" x="224" y="352" width="32" height="32"/>
+ </objectgroup>
 </map>
