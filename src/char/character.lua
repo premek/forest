@@ -100,11 +100,12 @@ return require 'lib.hump.class' {
       and item.type == "collect" then
         self.world:remove(item)
         self.inventory[item.name] = (self.inventory[item.name] or 0) + 1
-        for k,v in pairs(self.map.layers.objects.objects) do
-          if v.id == item.id then
+        for k, obj in ipairs(self.map.layers.objects.objects) do
+          if obj.id == item.id then
             table.remove(self.map.layers.objects.objects, k)
           end
         end
+        table.remove(self.map.objects, item.id)
         self.map:setObjectSpriteBatches(self.map.layers.objects)
         return true
     end
