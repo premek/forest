@@ -13,9 +13,7 @@ return require 'lib.hump.class' {
   isControlled = false,
   inventory = {}, -- FIXME
 
-  init = function(self, world, map, x, y, w, h)
-    self.world = world
-    self.map = map
+  init = function(self, x, y, w, h)
     self.pos = vector(x or 0, y or 0)
     self.size = vector(w or 32, h or 32)
 
@@ -29,6 +27,11 @@ return require 'lib.hump.class' {
       self.quads[i] = love.graphics.newQuad(32*(i-1), 0, 32, 32, dx, dy)
     end
 
+  end,
+  
+  world = function(self, world, map)
+    self.world = world
+    self.map = map
     world:add(self, self.pos.x, self.pos.y, self.size.x, self.size.y)
   end,
 

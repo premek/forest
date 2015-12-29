@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="19">
+ <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
+  <image source="../../src/img/green.png" width="256" height="256"/>
+  <terraintypes>
+   <terrain name="gnd" tile="-1"/>
+  </terraintypes>
+  <tile id="1" terrain="0,0,0,0"/>
+  <tile id="2" terrain=",,0,0"/>
+  <tile id="3" terrain=",,0,"/>
+  <tile id="4" terrain=",,,0"/>
+  <tile id="5" terrain=",0,,0"/>
+  <tile id="6" terrain=",0,0,0"/>
+  <tile id="7" terrain="0,,0,"/>
+  <tile id="8" terrain="0,,0,0"/>
+  <tile id="9" terrain="0,0,,"/>
+  <tile id="11" terrain=",0,,"/>
+  <tile id="12" terrain="0,,,"/>
+  <tile id="16" terrain="0,0,0,"/>
+  <tile id="17" terrain="0,0,,0"/>
+  <tile id="18">
+   <objectgroup draworder="index"/>
+  </tile>
+  <tile id="29">
+   <animation>
+    <frame tileid="29" duration="150"/>
+    <frame tileid="30" duration="150"/>
+    <frame tileid="31" duration="150"/>
+    <frame tileid="32" duration="150"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer name="sky" width="13" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFo3gQYwDjGACq
+  </data>
+ </layer>
+ <layer name="ground" width="13" height="13">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBpAzIUF41PPwYAdsOExn5cEPbjMBwFWIGYnwXxsduAznxQ9ILcwI2F0d2HTgyuM0PUgm41uLjrmJFIdJRgAURIBtQ==
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
+  <object id="7" name="finish" type="action" gid="19" x="288" y="224" width="32" height="32"/>
+ </objectgroup>
+</map>
