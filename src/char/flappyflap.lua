@@ -1,7 +1,10 @@
 local love = love
+local Character = require "char.character"
 
 return require 'lib.hump.class' {
-  __includes = {require "char.character"},
+  __includes = {Character},
+  inventoryCapacity = 1,
+  img = "img/flappyflap.png",
 
   --init = function(self, world, img, x, y)
   --  Character.init(self, world, img, x, y)
@@ -27,13 +30,18 @@ return require 'lib.hump.class' {
     if love.keyboard.isDown('right') then
       self.speed.x = self.speed.x + .4
     end
+    if love.keyboard.isDown('space') then
+      local i,a,c = pairs(self.inventory) -- FIXME do it nicer
+      local item, _ = i(a,c)
+      if item then
+        print("drop " .. item) -- TODO
+
+        self.inventory = {}
+      end
+    end
   end,
 
   collideWith = function(self, other, col)
-    if other.properties and other.properties.collectible then
-      print("Collect", other.properties.item, other.x, other.y) -- TODO -- FIXME walking is wierd here
-      return
-    end
 
     if col.normal.y < 0 then
       -- feet touched
@@ -54,8 +62,3 @@ return require 'lib.hump.class' {
   end,
 
 }
-
---D = Class{__includes = {A,B}}
---instance = D()
---instance:foo() -- prints 'foo'
---instance:bar() -- prints 'bar'

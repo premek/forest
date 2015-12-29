@@ -4,6 +4,7 @@ local bump = require "lib.bump"
 local camera = require 'lib.hump.camera'
 local Shaman = require "char.shaman"
 local Flappyflap = require "char.flappyflap"
+local Snake = require "char.snake"
 require "util"
 
 local debug = false
@@ -23,8 +24,9 @@ function love.load()
   world = bump.newWorld()
   map:bump_init(world) 	--- Adds each collidable tile to the Bump world.
   chars = {
-    Shaman(world, map, "img/shaman.png", 64, 64),
-    Flappyflap(world, map, "img/flappyflap.png", 96, 64),
+    Shaman(world, map, 64, 64),
+    Flappyflap(world, map, 96, 64),
+    Snake(world, map, 96, 196),
   }
   chars[1].isControlled = true
 

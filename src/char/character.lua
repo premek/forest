@@ -1,22 +1,21 @@
 local love = love
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
+local maputils = require "maputils"
 
 return require 'lib.hump.class' {
   counters = {
     anim = 0
   },
-  quads = {},
   quadsNum = 4,
   currentQuadNum = 1,
   facing = 1,
   grounded = false,
   isControlled = false,
-  inventory = {},
+  inventory = {}, -- FIXME
 
-  init = function(self, world, map, img, x, y, w, h)
+  init = function(self, world, map, x, y, w, h)
     self.world = world
     self.map = map
-    self.img = img
     self.pos = vector(x or 0, y or 0)
     self.size = vector(w or 32, h or 32)
 
@@ -25,6 +24,7 @@ return require 'lib.hump.class' {
 
     self.image = love.graphics.newImage(self.img)
     local dx, dy = self.image:getDimensions()
+    self.quads = {}
     for i=1,self.quadsNum do
       self.quads[i] = love.graphics.newQuad(32*(i-1), 0, 32, 32, dx, dy)
     end
@@ -62,8 +62,7 @@ return require 'lib.hump.class' {
       self.grounded = false -- no collisions, no jumping
 
       for _, col in ipairs(cols) do
-        local _ = false
-        or self:callAction(col.other)
+        local _ = self:callAction(col.other)
         or self:collect(col.other)
         or self:collideWith(col.other, col)
       end
@@ -83,8 +82,12 @@ return require 'lib.hump.class' {
 
   end,
 
+  animate = function(self, dt) end,
+
   getCollisionType = function(item, other)
-    if other.type == "action" then return 'cross'
+    if other.type == "action"
+    or other.type == "collect" then
+      return 'cross'
     else return "slide"
     end
     --if     other.isCoin   then return 'cross'
@@ -98,15 +101,14 @@ return require 'lib.hump.class' {
   collect = function(self, item)
     if item.layer and item.layer.name == "objects"
       and item.type == "collect" then
+
+        local c = 0
+        for _,amount in pairs(self.inventory) do c = c + amount end
+        if self.inventoryCapacity and self.inventoryCapacity <= c then return false end
+
         self.world:remove(item)
         self.inventory[item.name] = (self.inventory[item.name] or 0) + 1
-        for k, obj in ipairs(self.map.layers.objects.objects) do
-          if obj.id == item.id then
-            table.remove(self.map.layers.objects.objects, k)
-          end
-        end
-        table.remove(self.map.objects, item.id)
-        self.map:setObjectSpriteBatches(self.map.layers.objects)
+        maputils.removeObjectByItem(self.map, item)
         return true
     end
   end,
@@ -133,14 +135,20 @@ return require 'lib.hump.class' {
       self.facing or 1,
       1)
 
-    -- if false and self.isControlled then
-    --   love.graphics.setColor(0,50,0, 20)
-    --   love.graphics.setLineWidth(7)
-    --   love.graphics.circle("line",
-    --     self.pos.x + self.size.x/2,
-    --     self.pos.y  + self.size.x/2,
-    --     self.size.x*.9)
-    -- end
+    if self.isControlled then
+      love.graphics.setColor(255,255,255, 60-60*self.speed:len())
+      love.graphics.setLineWidth(7)
+      love.graphics.circle("line",
+        self.pos.x + self.size.x/2,
+        self.pos.y  + self.size.x/2,
+        self.size.x*.9)
+      love.graphics.setColor(0,0,0, 30-30*self.speed:len())
+      love.graphics.setLineWidth(.5)
+      love.graphics.circle("line",
+        self.pos.x + self.size.x/2,
+        self.pos.y  + self.size.x/2,
+        self.size.x)
+    end
     --
     -- if false and self.isControlled then
     --   love.graphics.setColor(0,255,0)

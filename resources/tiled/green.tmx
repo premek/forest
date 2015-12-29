@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="11">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="19">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
   <tile id="18">
@@ -34,5 +34,10 @@
   <object id="4" name="redkey" type="collect" gid="30" x="128" y="96" width="32" height="32"/>
   <object id="7" name="finish" type="action" gid="19" x="288" y="224" width="32" height="32"/>
   <object id="8" name="open" type="action" gid="18" x="224" y="352" width="32" height="32"/>
+  <object id="11" name="redkey" type="collect" gid="30" x="160" y="64" width="32" height="32"/>
+  <object id="12" type="snakeground" gid="12" x="128" y="352" width="32" height="32"/>
+  <object id="13" type="snakeground" gid="13" x="160" y="352" width="32" height="32"/>
+  <object id="16" type="snakeground" gid="6" x="128" y="320" width="32" height="32"/>
+  <object id="17" type="snakeground" gid="8" x="160" y="320" width="32" height="32"/>
  </objectgroup>
 </map>
