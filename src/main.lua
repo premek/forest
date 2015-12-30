@@ -21,6 +21,8 @@ function love.load()
     require "level.01_test",
     require "level.01-02-test",
     require "level.02_test",
+    require "level.99_last",
+    current = 2,
     loadNext = function(self)
       self.current = (self.current or 0) + 1
       return self[self.current]() -- instantiate the level

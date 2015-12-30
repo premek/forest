@@ -1,6 +1,5 @@
 local love = love
 local Character = require "char.character"
-local maputils = require "maputils"
 
 return require 'lib.hump.class' {
   __includes = {Character},
@@ -20,12 +19,12 @@ return require 'lib.hump.class' {
     end
   end,
 
-  getCollisionType = function(item, other)
-    if other.type == "action"
-    or other.type == "snakeground" then
-      return 'cross'
-    else return "slide"
-    end
-  end,
+  -- getCollisionType = function(item, other)
+  --   if other.type == "action"
+  --   or other.type == "snakeground" then
+  --     return 'cross'
+  --   else return "slide"
+  --   end
+  -- end,
 
 }

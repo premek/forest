@@ -51,21 +51,7 @@ return require 'lib.hump.class' {
 
   animate = function(self, dt) end,
 
-  getCollisionType = function(item, other)
-    if other.type == "action"
-    or other.type == "collect" then
-      return 'cross'
-    else return "slide"
-    end
-    --if     other.isCoin   then return 'cross'
-    --elseif other.isWall   then return 'slide'
-    --elseif other.isExit   then return 'touch'
-    --elseif other.isSpring then return 'bounce'
-    --end
-    -- else return nil
-  end,
-
-  collideWith = function(self, other, col)
+  collision = function(self, other, col)
     if col.normal.y < 0 then
       -- feet touched
       self.speed.y = 0
@@ -84,17 +70,14 @@ return require 'lib.hump.class' {
     end
   end,
 
-  collect = function(self, item)
-    if item.layer and item.layer.name == "objects"
-      and item.type == "collect" then
+  collect = function(self, itemname)
+    -- TODO inventory count check
+    local c = 0
+    for _,amount in pairs(self.inventory) do c = c + amount end
+    if self.inventoryCapacity and self.inventoryCapacity <= c then return false end
 
-        local c = 0
-        for _,amount in pairs(self.inventory) do c = c + amount end
-        if self.inventoryCapacity and self.inventoryCapacity <= c then return false end
-
-        self.inventory[item.name] = (self.inventory[item.name] or 0) + 1
-        return true
-    end
+    self.inventory[itemname] = (self.inventory[itemname] or 0) + 1
+    return true
   end,
 
   draw = function(self)

@@ -3,7 +3,8 @@ local sti = require "lib.sti"
 local bump = require "lib.bump"
 local maputils = require "maputils"
 
-return require 'lib.hump.class' { -- XXX do I need classes? or just level data + level controller?
+return require 'lib.hump.class' {
+  -- XXX do I need classes? or just level data + level controller?
 
   -- new() and load() (call from load())
   init = function(self)
@@ -30,6 +31,7 @@ return require 'lib.hump.class' { -- XXX do I need classes? or just level data +
 
   update = function(self, dt)
     self.map:update(dt)
+
     for _,char in ipairs(self.chars) do
       char:update(dt)
 
@@ -37,7 +39,8 @@ return require 'lib.hump.class' { -- XXX do I need classes? or just level data +
 
       if char.speed:len() ~= 0 then
 
-        local actualX, actualY, cols, _ = self.world:move(char, newPos.x, newPos.y, char.getCollisionType)
+        local actualX, actualY, cols, _ = self.world:move(char, newPos.x, newPos.y,
+         function (char, other) return self:getCollisionType(char, other) end)
 
         local original = {
           grounded = char.grounded,
@@ -47,17 +50,7 @@ return require 'lib.hump.class' { -- XXX do I need classes? or just level data +
         char.grounded = false -- no collisions, no jumping
 
         for _, col in ipairs(cols) do
-          local actionCalled = self:callAction(char, col.other)
-
-          if not actionCalled then
-            local collected = char:collect(col.other)
-
-            if collected then
-              self.world:remove(col.other)
-              maputils.removeObjectByItem(self.map, col.other)
-            else char:collideWith(col.other, col) end
-
-          end
+          self:collision(char, col.other, col)
         end
 
         -- TODO some tollerance
@@ -75,13 +68,36 @@ return require 'lib.hump.class' { -- XXX do I need classes? or just level data +
     end
   end,
 
-  callAction = function(self, char, item)
-    if item.layer and item.layer.name == "objects"
-      and item.type == "action" then
-        print("Action", char.type, item.name)
-        self:action(char, item)
-      return true
+
+  getCollisionType = function(self, char, other)
+    local levelColType = self.getLevelCollisionType and self:getLevelCollisionType(char, other)
+    if levelColType then return levelColType end
+
+    if other.type == "action"
+    or other.type == "collect" then
+      return 'cross'
+    else return "slide"
     end
+    --if     other.isCoin   then return 'cross'
+    --elseif other.isWall   then return 'slide'
+    --elseif other.isExit   then return 'touch'
+    --elseif other.isSpring then return 'bounce'
+    --end
+    -- else return nil
+  end,
+
+  collision = function(self, char, object, collision)
+    if object.layer and object.layer.name == "objects" then
+      print("Object collision", char.type, object.name, object.type)
+      if object.type == "collect" and char:collect(object.name) then
+        self.world:remove(object)
+        maputils.removeObjectByItem(self.map, object)
+      end
+      self:action(char, object)
+    else
+    if char.collision then char:collision(object, collision) end
+    if object.collision then object:collision(char, collision) end
+  end
   end,
 
   draw = function(self)

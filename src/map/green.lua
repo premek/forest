@@ -7,7 +7,7 @@ return {
   height = 13,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 19,
+  nextobjectid = 22,
   properties = {},
   tilesets = {
     {
@@ -113,8 +113,8 @@ return {
         8, 0, 25, 0, 0, 0, 0, 0, 25, 0, 0, 0, 6,
         8, 0, 25, 0, 5, 3, 3, 3, 3, 4, 0, 0, 6,
         8, 0, 25, 0, 6, 2, 10, 10, 2, 8, 0, 0, 6,
-        8, 0, 26, 0, 12, 13, 0, 0, 12, 13, 0, 5, 7,
-        8, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
+        8, 0, 0, 0, 12, 13, 0, 0, 12, 13, 0, 5, 7,
+        8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
         9, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 7, 2,
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
       }
@@ -128,20 +128,6 @@ return {
         ["collidable"] = "true"
       },
       objects = {
-        {
-          id = 4,
-          name = "redkey",
-          type = "collect",
-          shape = "rectangle",
-          x = 128,
-          y = 96,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 30,
-          visible = true,
-          properties = {}
-        },
         {
           id = 7,
           name = "finish",
@@ -158,7 +144,7 @@ return {
         },
         {
           id = 8,
-          name = "open",
+          name = "openwall",
           type = "action",
           shape = "rectangle",
           x = 224,
@@ -172,11 +158,11 @@ return {
         },
         {
           id = 11,
-          name = "redkey",
+          name = "key",
           type = "collect",
           shape = "rectangle",
-          x = 160,
-          y = 64,
+          x = 288,
+          y = 96,
           width = 32,
           height = 32,
           rotation = 0,
@@ -186,8 +172,8 @@ return {
         },
         {
           id = 12,
-          name = "",
-          type = "snakeground",
+          name = "snakeground",
+          type = "",
           shape = "rectangle",
           x = 128,
           y = 352,
@@ -200,8 +186,8 @@ return {
         },
         {
           id = 13,
-          name = "",
-          type = "snakeground",
+          name = "snakeground",
+          type = "",
           shape = "rectangle",
           x = 160,
           y = 352,
@@ -214,8 +200,8 @@ return {
         },
         {
           id = 16,
-          name = "",
-          type = "snakeground",
+          name = "snakeground",
+          type = "",
           shape = "rectangle",
           x = 128,
           y = 320,
@@ -228,8 +214,8 @@ return {
         },
         {
           id = 17,
-          name = "",
-          type = "snakeground",
+          name = "snakeground",
+          type = "",
           shape = "rectangle",
           x = 160,
           y = 320,
@@ -237,6 +223,34 @@ return {
           height = 32,
           rotation = 0,
           gid = 8,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 19,
+          name = "door",
+          type = "",
+          shape = "rectangle",
+          x = 64,
+          y = 352,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 27,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 20,
+          name = "door",
+          type = "",
+          shape = "rectangle",
+          x = 64,
+          y = 320,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 26,
           visible = true,
           properties = {}
         }
