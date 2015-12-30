@@ -3,7 +3,7 @@ local Character = require "char.character"
 
 return require 'lib.hump.class' {
   __includes = {Character},
-  inventoryCapacity = 1,
+  inventoryCapacity = 1, -- TODO do not collect but hold, move and drop
   img = "img/flappyflap.png",
 
   animate = function(self, dt)

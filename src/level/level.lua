@@ -90,6 +90,7 @@ return require 'lib.hump.class' {
     if object.layer and object.layer.name == "objects" then
       print("Object collision", char.type, object.name, object.type)
       if object.type == "collect" and char:collect(object.name) then
+        print_r(object)
         self.world:remove(object)
         maputils.removeObjectByItem(self.map, object)
       end
