@@ -2,11 +2,11 @@ local Level = require "level.level"
 return require 'lib.hump.class' {
   __includes = {Level},
 
-  mapfile = "map/tutorial01.lua",
+  mapfile = "map/tutorial02.lua",
 
   load = function(self)
     self.chars = {
-      (require "char.shaman")(4*32, 7*32),
+      (require "char.shaman")(2*32, 4*32),
     }
     self.chars[1].isControlled = true
   end,

@@ -1,6 +1,5 @@
 local love = love
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
-local maputils = require "maputils"
 
 return require 'lib.hump.class' {
   counters = {
@@ -14,25 +13,22 @@ return require 'lib.hump.class' {
   inventory = {}, -- FIXME
 
   init = function(self, x, y, w, h)
+    print("Creating character", self.img)
     self.pos = vector(x or 0, y or 0)
     self.size = vector(w or 32, h or 32)
 
     self.speed = vector(0,0)
     self.gravity = vector(0,.1)
+  end,
 
+  load = function(self)
+    print("Loading character", self.img)
     self.image = love.graphics.newImage(self.img)
     local dx, dy = self.image:getDimensions()
     self.quads = {}
     for i=1,self.quadsNum do
       self.quads[i] = love.graphics.newQuad(32*(i-1), 0, 32, 32, dx, dy)
     end
-
-  end,
-  
-  world = function(self, world, map)
-    self.world = world
-    self.map = map
-    world:add(self, self.pos.x, self.pos.y, self.size.x, self.size.y)
   end,
 
   update = function(self, dt)
@@ -45,43 +41,11 @@ return require 'lib.hump.class' {
     self.speed.x = self.speed.x * .9
     --self.speed.y = self.speed.y * .8
 
-    if self.speed.x ~= 0 then
-      self.facing = (math.abs(self.speed.x)) / self.speed.x
-    end
+    --if self.speed.x ~= 0 then
+  --    self.facing = (math.abs(self.speed.x)) / self.speed.x
+    --end
 
     if self.isControlled then self:handleControls(dt) end
-
-    local newPos = self.pos + self.speed
-
-    if self.speed:len() ~= 0 then
-
-      local actualX, actualY, cols, _ = self.world:move(self, newPos.x, newPos.y, self.getCollisionType)
-
-      local original = {
-        grounded = self.grounded,
-        speed = self.speed:clone(),
-      }
-
-      self.grounded = false -- no collisions, no jumping
-
-      for _, col in ipairs(cols) do
-        local _ = self:callAction(col.other)
-        or self:collect(col.other)
-        or self:collideWith(col.other, col)
-      end
-      -- TODO some tollerance
-      -- to be able to jump up between 2 tiles
-      -- or to fall down into a hole of size of 1 tile
-
-      self.pos.x = actualX
-      self.pos.y = actualY
-
-      if self.grounded and not original.grounded then
-        -- FIXME store somewhere else than in "world"
-        self.world.shake = original.speed.y * .07 - .2 -- only for long jumps
-      end
-
-    end
 
   end,
 
@@ -101,6 +65,25 @@ return require 'lib.hump.class' {
     -- else return nil
   end,
 
+  collideWith = function(self, other, col)
+    if col.normal.y < 0 then
+      -- feet touched
+      self.speed.y = 0
+      self.grounded = true
+    end
+    if col.normal.y > 0 then
+      -- head touched
+      self.speed.y = -.1
+       -- this is to allow jumping in a space of size of 1 tile
+       -- increase to implement 'hold/stick to ceiling'
+       -- FIXME what is a good value in relation to gravity and jump speed
+    end
+    if col.normal.x ~= 0 then
+      -- left or right touched
+      self.speed.x = 0
+    end
+  end,
+
   collect = function(self, item)
     if item.layer and item.layer.name == "objects"
       and item.type == "collect" then
@@ -109,23 +92,9 @@ return require 'lib.hump.class' {
         for _,amount in pairs(self.inventory) do c = c + amount end
         if self.inventoryCapacity and self.inventoryCapacity <= c then return false end
 
-        self.world:remove(item)
         self.inventory[item.name] = (self.inventory[item.name] or 0) + 1
-        maputils.removeObjectByItem(self.map, item)
         return true
     end
-  end,
-
-  callAction = function(self, item)
-    if item.layer and item.layer.name == "objects"
-      and item.type == "action" then
-        self:action(item, item.name)
-      return true
-    end
-  end,
-
-  action = function(self, item, action)
-    print("Action " .. action)
   end,
 
   draw = function(self)

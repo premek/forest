@@ -6,7 +6,7 @@ require "util"
 
 local debug = false
 
-local cam, levels
+local cam, levels, level
 
 local zoom = 2
 
@@ -17,17 +17,25 @@ function love.load()
   love.graphics.setNewFont( 10 )
   cam = camera(0,0, zoom)
 
-  levels = { -- XXX just classes not instances?
-    require "level.02_test"
+  levels = {
+    require "level.01_test",
+    require "level.01-02-test",
+    require "level.02_test",
+    loadNext = function(self)
+      self.current = (self.current or 0) + 1
+      return self[self.current]() -- instantiate the level
+    end
   }
-  levels.current = levels[1]
-  levels.current:init()
+  level = levels:loadNext()
 end
 
 function love.update(dt)
-  levels.current:update(dt)
+  level:update(dt)
+
   -- FIXME where to? cameraQ
-  levels.current.world.shake = math.max(0, (levels.current.world.shake or 0) - dt)
+  level.world.shake = math.max(0, (level.world.shake or 0) - dt)
+
+  if level.finished then level = levels:loadNext() end
 end
 
 
@@ -40,25 +48,25 @@ end
 function love.draw()
   cam:lookAt(love.graphics.getWidth()*.5/zoom,love.graphics.getHeight()*.5/zoom)
   -- FIXME where to?
-  cam:move(math.random(-levels.current.world.shake*2,levels.current.world.shake*2),
-           math.random(-levels.current.world.shake*13,levels.current.world.shake*13)) -- FIXME decreasing amptitude, not random
-
+  if level.world.shake then cam:move(math.random(-level.world.shake*2,level.world.shake*2),
+           math.random(-level.world.shake*13,level.world.shake*13)) -- FIXME decreasing amptitude, not random
+  end
   cam:attach()
   love.graphics.setColor(255, 255, 255, 255)
   --love.graphics.scale(2)
   --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
-  levels.current:draw()
+  level:draw()
 
   if debug then
     love.graphics.setLineWidth(.5)
-    for _, v in ipairs(levels.current.world:getItems()) do
+    for _, v in ipairs(level.world:getItems()) do
       local b = v.layer and v.layer.name == "objects" and 255 or 0;
       love.graphics.setColor(255, 0, b, 20)
-      love.graphics.rectangle("fill", levels.current.world:getRect(v))
+      love.graphics.rectangle("fill", level.world:getRect(v))
       love.graphics.setColor(255, 0, b)
-      love.graphics.rectangle("line", levels.current.world:getRect(v))
+      love.graphics.rectangle("line", level.world:getRect(v))
     end
-    for _, ch in ipairs(levels.current.chars) do
+    for _, ch in ipairs(level.chars) do
       drawVector(0,255,0, 2, ch.pos, ch.speed)
 
       love.graphics.setColor(0,0,255, 255)
@@ -79,9 +87,9 @@ end
 
 local switchPlayer = (function(current)
   return function()
-    levels.current.chars[current].isControlled = false
-    current = (current%#levels.current.chars)+1
-    levels.current.chars[current].isControlled = true
+    level.chars[current].isControlled = false
+    current = (current%#level.chars)+1
+    level.chars[current].isControlled = true
   end
 end)(1) -- muhehehehe
 
