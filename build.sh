@@ -7,16 +7,17 @@ LD="love-0.10.0-win32"
 
 
 if [ "$1" == "clean" ]; then 
- rm "${P}.love" "${P}.zip"
+ rm -r "target"
  exit;
 fi
 
 
 find . -iname "*.lua" | xargs luac -p || { echo 'luac parse test failed' ; exit 1; }
 
+mkdir "target"
 
 cd src
-zip -9 -r - . > "../${P}.love"
+zip -9 -r - . > "../target/${P}.love"
 cd ..
 
 tmp=`mktemp -d 2>/dev/null || mktemp -d -t 'mytmpdir'`
@@ -26,5 +27,5 @@ cp "$LD"/*dll "$LD"/license* "$tmp/$P"
 cd "$tmp"
 zip -9 -r - "$P" > "${P}.zip"
 cd -
-cp "$tmp/${P}.zip" .
+cp "$tmp/${P}.zip" "target/"
 rm -r "$tmp"
