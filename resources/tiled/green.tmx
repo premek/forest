@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="22">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="26">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
   <tile id="18">
@@ -40,5 +40,13 @@
   <object id="17" name="snakeground" gid="8" x="160" y="320" width="32" height="32"/>
   <object id="19" name="door" gid="27" x="64" y="352" width="32" height="32"/>
   <object id="20" name="door" gid="26" x="64" y="320" width="32" height="32"/>
+  <object id="22" name="shaman" type="char" x="64" y="96" width="32" height="32">
+   <properties>
+    <property name="controlled" value="true"/>
+   </properties>
+  </object>
+  <object id="23" name="snake" type="char" x="96" y="320" width="32" height="32"/>
+  <object id="24" name="flappyflap" type="char" x="192" y="192" width="32" height="32"/>
+  <object id="25" name="flappyflap" type="char" x="160" y="32" width="32" height="32"/>
  </objectgroup>
 </map>

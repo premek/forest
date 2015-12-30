@@ -5,15 +5,6 @@ return require 'lib.hump.class' {
 
   mapfile = "map/green.lua",
 
-  load = function(self)
-    self.chars = {
-      (require "char.shaman")(2*32, 3*32),
-      (require "char.flappyflap")(250, 64),
-      (require "char.snake")(96, 196),
-    }
-    self.chars[1].isControlled = true
-  end,
-
   action = function(self, char, item)
     if char.type == "shaman" and item.name == "door" and char.inventory.key then -- TODO inventory check
       char.inventory.key = nil

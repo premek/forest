@@ -7,7 +7,7 @@ return {
   height = 13,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 22,
+  nextobjectid = 26,
   properties = {},
   tilesets = {
     {
@@ -251,6 +251,60 @@ return {
           height = 32,
           rotation = 0,
           gid = 26,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 22,
+          name = "shaman",
+          type = "char",
+          shape = "rectangle",
+          x = 64,
+          y = 96,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["controlled"] = "true"
+          }
+        },
+        {
+          id = 23,
+          name = "snake",
+          type = "char",
+          shape = "rectangle",
+          x = 96,
+          y = 320,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 24,
+          name = "flappyflap",
+          type = "char",
+          shape = "rectangle",
+          x = 192,
+          y = 192,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 25,
+          name = "flappyflap",
+          type = "char",
+          shape = "rectangle",
+          x = 160,
+          y = 32,
+          width = 32,
+          height = 32,
+          rotation = 0,
           visible = true,
           properties = {}
         }

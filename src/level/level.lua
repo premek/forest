@@ -19,6 +19,21 @@ return require 'lib.hump.class' {
     self.map = sti.new(self.mapfile, { "bump" })
     self.map:bump_init(self.world) 	--- Adds each collidable tile to the Bump world.
 
+    self.chars = {}
+    local controlled
+    for _, item in ipairs(self.world:getItems()) do
+      if item.type == "char" then
+        maputils.removeObjectByItem(self.map, item)
+        self.world:remove(item)
+        local ch = require ("char."..item.name)(item.x, item.y)
+        if item.properties and item.properties.controlled then controlled = ch end
+        table.insert(self.chars, ch)
+      end
+    end
+    if controlled then controlled.isControlled = true
+    elseif #self.chars > 0 then self.chars[1].isControlled = true
+    end
+
     self:load()
 
     for _,ch in ipairs(self.chars) do
@@ -90,7 +105,6 @@ return require 'lib.hump.class' {
     if object.layer and object.layer.name == "objects" then
       print("Object collision", char.type, object.name, object.type)
       if object.type == "collect" and char:collect(object.name) then
-        print_r(object)
         self.world:remove(object)
         maputils.removeObjectByItem(self.map, object)
       end
