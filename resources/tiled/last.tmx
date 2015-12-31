@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="35">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="36">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
   <terraintypes>
@@ -40,7 +40,7 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrEmItIDFPPwUA8YCNBjwCaHk4gZiYSs9MobEYKBgB0IgG1
+   eJxjYmBgYBrEmItIDFPPwUA8YCNRDysQs0P1cAIxMx7MAtXDg+Y+fBjdHWwMhMOBF4f7iPUTsh3k6CEUDjDMzkB63MMwAK2eAf0=
   </data>
  </layer>
  <objectgroup name="objects">
@@ -48,5 +48,6 @@
    <property name="collidable" value="true"/>
   </properties>
   <object id="28" name="shaman" type="char" x="32" y="128" width="32" height="32"/>
+  <object id="35" name="box" type="move" gid="16" x="224" y="192" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -54,13 +54,13 @@ return require 'lib.hump.class' {
 
       if char.speed:len() ~= 0 then
 
-        local actualX, actualY, cols, _ = self.world:move(char, newPos.x, newPos.y,
-         function (char, other) return self:getCollisionType(char, other) end)
-
         local original = {
           grounded = char.grounded,
           speed = char.speed:clone(),
         }
+
+        local actualX, actualY, cols, _ = self.world:move(char, newPos.x, newPos.y,
+         function (char, other) return self:getCollisionType(char, other) end)
 
         char.grounded = false -- no collisions, no jumping
 
@@ -108,7 +108,13 @@ return require 'lib.hump.class' {
         self.world:remove(object)
         maputils.removeObjectByItem(self.map, object)
       end
-      self:action(char, object)
+      if object.type == "move" then
+        local actualX, actualY, cols, _ =
+          self.world:move(object, object.x-collision.normal.x*0.4, object.y-collision.normal.y*0.4)
+        object.x, object.y = actualX, actualY
+        maputils.moveObjectByItem(self.map, object)
+      end
+      if self.action then self:action(char, object) end
     else
     if char.collision then char:collision(object, collision) end
     if object.collision then object:collision(char, collision) end
