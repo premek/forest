@@ -4,4 +4,11 @@ return require 'lib.hump.class' {
 
   mapfile = "map/last.lua",
 
+  action = function(self, moving, other)
+    if other.type=="action" and other.name == "button" then
+      print("button pressed", moving.type, moving.name)
+
+    end
+  end,
+
 }

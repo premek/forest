@@ -14,11 +14,12 @@ return require 'lib.hump.class' {
 
   init = function(self, x, y, w, h)
     print("Creating character", self.img)
-    self.pos = vector(x or 0, y or 0)
-    self.size = vector(w or 32, h or 32)
+    self.x = x or 0
+    self.y = y or 0
+    self.width = w or 32
+    self.height = h or 32
 
     self.speed = vector(0,0)
-    self.gravity = vector(0,.1)
   end,
 
   load = function(self)
@@ -32,43 +33,11 @@ return require 'lib.hump.class' {
   end,
 
   update = function(self, dt)
-    if self.speed:len() < 0.1 then self.speed = vector(0,0) end
-
     self:animate(dt)
-
-    self.speed = self.speed + self.gravity
-    -- TODO 0 friction in air, else other objects friction - implement mud, ice, ...
-    self.speed.x = self.speed.x * .9
-    --self.speed.y = self.speed.y * .8
-
-    --if self.speed.x ~= 0 then
-  --    self.facing = (math.abs(self.speed.x)) / self.speed.x
-    --end
-
     if self.isControlled then self:handleControls(dt) end
-
   end,
 
   animate = function(self, dt) end,
-
-  collision = function(self, other, col)
-    if col.normal.y < 0 then
-      -- feet touched
-      self.speed.y = 0
-      self.grounded = true
-    end
-    if col.normal.y > 0 then
-      -- head touched
-      self.speed.y = -.1
-       -- this is to allow jumping in a space of size of 1 tile
-       -- increase to implement 'hold/stick to ceiling'
-       -- FIXME what is a good value in relation to gravity and jump speed
-    end
-    if col.normal.x ~= 0 then
-      -- left or right touched
-      self.speed.x = 0
-    end
-  end,
 
   collect = function(self, itemname)
     -- TODO inventory count check
@@ -84,8 +53,8 @@ return require 'lib.hump.class' {
     love.graphics.setColor(255,255,255)
     love.graphics.draw(self.image,
       self.quads[self.currentQuadNum],
-      self.pos.x+self.size.x/2-self.size.x/2*self.facing,
-      self.pos.y,
+      self.x+self.width/2-self.width/2*self.facing,
+      self.y,
       0,
       self.facing or 1,
       1)
@@ -94,15 +63,15 @@ return require 'lib.hump.class' {
       love.graphics.setColor(255,255,255, 60-60*self.speed:len())
       love.graphics.setLineWidth(7)
       love.graphics.circle("line",
-        self.pos.x + self.size.x/2,
-        self.pos.y  + self.size.x/2,
-        self.size.x*.9)
+        self.x + self.width/2,
+        self.y  + self.width/2,
+        self.width*.9)
       love.graphics.setColor(0,0,0, 30-30*self.speed:len())
       love.graphics.setLineWidth(.5)
       love.graphics.circle("line",
-        self.pos.x + self.size.x/2,
-        self.pos.y  + self.size.x/2,
-        self.size.x)
+        self.x + self.width/2,
+        self.y  + self.width/2,
+        self.width)
     end
     --
     -- if false and self.isControlled then
@@ -111,7 +80,7 @@ return require 'lib.hump.class' {
     --   love.graphics.line(
     --     self.pos.x + 4,
     --     self.pos.y - 8,
-    --     self.pos.x + self.size.x - 4,
+    --     self.pos.x + self.width - 4,
     --     self.pos.y-8)
     -- end
   end

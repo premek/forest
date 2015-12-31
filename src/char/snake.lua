@@ -19,12 +19,4 @@ return require 'lib.hump.class' {
     end
   end,
 
-  -- getCollisionType = function(item, other)
-  --   if other.type == "action"
-  --   or other.type == "snakeground" then
-  --     return 'cross'
-  --   else return "slide"
-  --   end
-  -- end,
-
 }
