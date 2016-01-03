@@ -22,7 +22,7 @@ cd ..
 
 tmp=`mktemp -d 2>/dev/null || mktemp -d -t 'mytmpdir'`
 mkdir "$tmp/$P"
-cat "$LD/love.exe" "${P}.love" > "$tmp/${P}/${P}.exe"
+cat "$LD/love.exe" "target/${P}.love" > "$tmp/${P}/${P}.exe"
 cp "$LD"/*dll "$LD"/license* "$tmp/$P"
 cd "$tmp"
 zip -9 -r - "$P" > "${P}.zip"
