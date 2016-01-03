@@ -13,8 +13,4 @@ return require 'lib.hump.class' {
     end
     if item.name == "finish" then self.finished = true end
   end,
-
-  getLevelCollisionType = function(self, char, other)
-    if other.name == "door" then return 'slide' end
-  end,
 }

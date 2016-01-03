@@ -97,6 +97,9 @@ return require 'lib.hump.class' {
 
   getCollisionType = function(self, moving, other)
     local levelColType = (self.getLevelCollisionType and self:getLevelCollisionType(moving, other))
+
+    if other.name == "door" then return 'slide' end
+
     if levelColType then return levelColType end
     if other.type == "action"
     or other.type == "collect" then
