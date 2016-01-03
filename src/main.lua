@@ -22,7 +22,7 @@ function love.load()
     require "level.01-02-test",
     require "level.02_test",
     require "level.99_last",
-    current = 3,
+    current = 1,
     loadNext = function(self)
       self.current = (self.current or 0) + 1
       return self[self.current]() -- instantiate the level
@@ -66,7 +66,7 @@ local drawDebug = function()
       love.graphics.print("Inventory:", ch.x, ch.y+ch.height)
       local li=1
       for item, amount in pairs(ch.inventory) do
-        love.graphics.print(item .. " x"..amount, ch.x, ch..y+ch.size.y+li*10)
+        love.graphics.print(item .. " x"..amount, ch.x, ch.y+ch.height+li*10)
         li = li + 1
       end
     end

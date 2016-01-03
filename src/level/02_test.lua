@@ -1,11 +1,12 @@
 local maputils = require "maputils"
 
 return require 'lib.hump.class' {
-  __includes = {require "level.level"},
+  __includes = {require "level"},
 
   mapfile = "map/green.lua",
 
   action = function(self, char, item)
+    print(char)
     if char.type == "shaman" and item.name == "door" and char.inventory.key then -- TODO inventory check
       char.inventory.key = nil
       maputils.removeObjectsByName(self.map, self.world, "door")

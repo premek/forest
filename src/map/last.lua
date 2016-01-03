@@ -7,7 +7,7 @@ return {
   height = 13,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 41,
+  nextobjectid = 42,
   properties = {},
   tilesets = {
     {
@@ -238,6 +238,19 @@ return {
           height = 32,
           rotation = 0,
           gid = 16,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 41,
+          name = "flappyflap",
+          type = "char",
+          shape = "rectangle",
+          x = 160,
+          y = 128,
+          width = 32,
+          height = 32,
+          rotation = 0,
           visible = true,
           properties = {}
         }

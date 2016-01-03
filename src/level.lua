@@ -95,9 +95,8 @@ return require 'lib.hump.class' {
     end
   end,
 
-
   getCollisionType = function(self, moving, other)
-    local levelColType = self.getLevelCollisionType and self:getLevelCollisionType(moving, other)
+    local levelColType = (self.getLevelCollisionType and self:getLevelCollisionType(moving, other))
     if levelColType then return levelColType end
     if other.type == "action"
     or other.type == "collect" then
@@ -117,7 +116,7 @@ return require 'lib.hump.class' {
   collision = function(self, moving, other, collision)
     -- general actions on objects
     if other.layer and other.layer.name == "objects" then
-      --print("Object collision", moving.name, moving.type, other.name, other.type)
+      --print("Object collision", moving.name, moving.type, ",", other.name, other.type)
       if other.type == "collect" and moving.collect and moving:collect(other.name) then
         self.world:remove(other)
         maputils.removeObjectByItem(self.map, other)

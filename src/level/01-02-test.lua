@@ -1,6 +1,6 @@
 local maputils = require "maputils"
 
-local Level = require "level.level"
+local Level = require "level"
 return require 'lib.hump.class' {
   __includes = {Level},
 
@@ -14,4 +14,7 @@ return require 'lib.hump.class' {
     if item.name == "finish" then self.finished = true end
   end,
 
+  getLevelCollisionType = function(self, char, other)
+    if other.name == "door" then return 'slide' end
+  end,
 }

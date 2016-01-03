@@ -1,4 +1,4 @@
-local Level = require "level.level"
+local Level = require "level"
 return require 'lib.hump.class' {
   __includes = {Level},
 

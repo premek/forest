@@ -230,7 +230,7 @@ return {
         {
           id = 32,
           name = "door",
-          type = "",
+          type = "action",
           shape = "rectangle",
           x = 224,
           y = 256,
@@ -244,7 +244,7 @@ return {
         {
           id = 33,
           name = "door",
-          type = "",
+          type = "action",
           shape = "rectangle",
           x = 224,
           y = 224,
@@ -258,7 +258,7 @@ return {
         {
           id = 34,
           name = "door",
-          type = "",
+          type = "action",
           shape = "rectangle",
           x = 224,
           y = 192,
