@@ -115,7 +115,7 @@ return require 'lib.hump.class' {
     -- general actions on objects
     if other.layer and other.layer.name == "objects" then
       --print("Object collision", moving.name, moving.type, ",", other.name, other.type)
-      if other.type == "collect" and moving.collect and moving:collect(other.name) then
+      if other.type == "collect" and moving.collect and moving:collect(other) then
         self.world:remove(other)
         maputils.removeObjectByItem(self.map, other)
       elseif other.type == "move" then

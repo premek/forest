@@ -42,13 +42,13 @@ return require 'lib.hump.class' {
 
   animate = function(self, dt) end,
 
-  collect = function(self, itemname)
+  collect = function(self, item)
     -- TODO inventory count check
     local c = 0
     for _,amount in pairs(self.inventory) do c = c + amount end
     if self.inventoryCapacity and self.inventoryCapacity <= c then return false end
 
-    self.inventory[itemname] = (self.inventory[itemname] or 0) + 1
+    self.inventory[item.name] = (self.inventory[item.name] or 0) + 1
     return true
   end,
 

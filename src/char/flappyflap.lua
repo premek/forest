@@ -3,7 +3,6 @@ local Character = require "char.character"
 
 return require 'lib.hump.class' {
   __includes = {Character},
-  inventoryCapacity = 1, -- TODO do not collect but hold, move and drop
   img = "img/flappyflap.png",
 
   animate = function(self, dt)
@@ -13,6 +12,12 @@ return require 'lib.hump.class' {
     elseif self.grounded then
       self.currentQuadNum = 1
     end
+  end,
+
+  collect = function(self, item)
+    --self.holding = item
+    --self.inventory.holding = item.name
+    return false -- do not collect / remove item
   end,
 
   handleControls = function(self, dt)
