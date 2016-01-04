@@ -22,7 +22,7 @@ function love.load()
     require "level.01-02-test",
     require "level.02_test",
     require "level.99_last",
-    current = 0,
+    current = 2,
     loadNext = function(self)
       self.current = (self.current or 0) + 1
       return self[self.current]() -- instantiate the level
@@ -89,18 +89,8 @@ function love.draw()
   cam:detach()
 end
 
-
-local switchPlayer = (function(current)
-  return function()
-    if not (level.chars and #level.chars > 0) then return end
-    level.chars[current].isControlled = false
-    current = (current%#level.chars)+1
-    level.chars[current].isControlled = true
-  end
-end)(1) -- muhehehehe
-
 function love.keypressed(key)
-  if key=='tab' then switchPlayer() end
+  level:keypressed(key)
   if key=='d' then debug = not debug end
   if key=='escape' then love.event.quit() end
 end

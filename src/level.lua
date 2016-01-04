@@ -29,9 +29,9 @@ return require 'lib.hump.class' {
         maputils.removeObjectByItem(self.map, item)
         self.world:remove(item)
         local ch = require ("char."..item.name)(item.x, item.y)
-        if item.properties and item.properties.controlled then controlled = ch end
         table.insert(self.chars, ch)
         table.insert(self.movables, ch)
+        if item.properties and item.properties.controlled then controlled = ch end
       end
       if item.type == "move" then
         item.speed = vector(0,0)
@@ -163,6 +163,22 @@ return require 'lib.hump.class' {
       if obj.speed == nil then obj.speed = {} end
       obj.speed.x = 0
     end
+  end,
+
+  switchPlayer = function(self)
+    if #self.chars > 1 then
+      for k, ch in ipairs(self.chars) do
+        if ch.isControlled then
+          ch.isControlled = false
+          self.chars[(k%#self.chars)+1].isControlled = true
+          break
+        end
+      end
+    end
+  end,
+
+  keypressed = function(self, key)
+    if key=='tab' then self:switchPlayer() end
   end,
 
   draw = function(self)
