@@ -3,7 +3,6 @@ local Character = require "char.character"
 
 return require 'lib.hump.class' {
   __includes = {Character},
-  type = "snake",
   img = "img/snake.png",
   inventoryCapacity = 0,
 

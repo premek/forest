@@ -2,6 +2,7 @@ local love = love
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 
 return require 'lib.hump.class' {
+  type = "char",
   counters = {
     anim = 0
   },
@@ -10,16 +11,18 @@ return require 'lib.hump.class' {
   facing = 1,
   grounded = false,
   isControlled = false,
-  inventory = {}, -- FIXME
+  inventory = nil, -- FIXME
 
-  init = function(self, x, y, w, h)
+  init = function(self, x, y, w, h, name)
     print("Creating character", self.img)
     self.x = x or 0
     self.y = y or 0
     self.width = w or 32
     self.height = h or 32
+    self.name = name
 
     self.speed = vector(0,0)
+    self.inventory = {}
   end,
 
   load = function(self)
@@ -47,6 +50,10 @@ return require 'lib.hump.class' {
 
     self.inventory[itemname] = (self.inventory[itemname] or 0) + 1
     return true
+  end,
+
+  collision = function(self, other)
+    if self.isControlled and other.type == "char" then print(other.name) end
   end,
 
   draw = function(self)

@@ -27,8 +27,11 @@ return require 'lib.hump.class' {
     for _, item in ipairs(self.world:getItems()) do
       if item.type == "char" then
         maputils.removeObjectByItem(self.map, item)
+        local CH = require ("char."..item.name)
+        local ch = CH(item.x, item.y, item.width, item.height, item.name)
+        ch:load()
         self.world:remove(item)
-        local ch = require ("char."..item.name)(item.x, item.y)
+        self.world:add(ch, ch.x, ch.y, ch.width, ch.height)
         table.insert(self.chars, ch)
         table.insert(self.movables, ch)
         if item.properties and item.properties.controlled then controlled = ch end
@@ -41,16 +44,7 @@ return require 'lib.hump.class' {
     if controlled then controlled.isControlled = true
     elseif #self.chars > 0 then self.chars[1].isControlled = true
     end
-
-    self:load()
-
-    for _,ch in ipairs(self.chars) do
-      ch:load()
-      self.world:add(ch, ch.x, ch.y, ch.width, ch.height)
-    end
   end,
-
-  load = function(_) end, -- to be implemented in subclasses or left empty
 
   update = function(self, dt)
     self.map:update(dt)
@@ -102,7 +96,8 @@ return require 'lib.hump.class' {
 
     if levelColType then return levelColType end
     if other.type == "action"
-    or other.type == "collect" then
+    or other.type == "collect"
+    or other.type == "char" then
       return 'cross'
     else return "slide"
     end
@@ -134,7 +129,9 @@ return require 'lib.hump.class' {
       end
     end
 
-    if other.type ~= "collect" and other.type ~= "action" then
+    if other.type ~= "collect"
+      and other.type ~= "action"
+      and other.type ~= "char" then
       self:physics(moving, collision)
     end
     -- object specific actions

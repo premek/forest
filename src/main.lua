@@ -22,7 +22,7 @@ function love.load()
     require "level.01-02-test",
     require "level.02_test",
     require "level.99_last",
-    current = 2,
+    current = 0,
     loadNext = function(self)
       self.current = (self.current or 0) + 1
       return self[self.current]() -- instantiate the level
@@ -60,10 +60,10 @@ local drawDebug = function()
   for _, ch in ipairs(level.movables) do
     drawVector(0,255,0, 2, ch.x, ch.y, ch.speed)
 
+    love.graphics.setColor(0,0,255, 255)
+    if ch.name then love.graphics.print(ch.name, ch.x, ch.y+ch.height) end
 
     if ch.inventory then
-      love.graphics.setColor(0,0,255, 255)
-      love.graphics.print("Inventory:", ch.x, ch.y+ch.height)
       local li=1
       for item, amount in pairs(ch.inventory) do
         love.graphics.print(item .. " x"..amount, ch.x, ch.y+ch.height+li*10)
