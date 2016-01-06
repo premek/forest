@@ -144,6 +144,10 @@ return require 'lib.hump.class' {
     if moving.type=="char" and moving.name=="shaman" and other.name == "finish" then
       self.finished = true
     end
+    if moving.type=="char" and other.name == "lava" then
+      print("died")
+      self.dead = true
+    end
   end,
 
   -- resolve physics (speed, grounding) for the object that just moved and colided

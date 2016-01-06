@@ -24,7 +24,7 @@ function love.load()
     require "level.01-02-test",
     require "level.02_test",
     require "level.99_last",
-    current = 2,
+    current = 1,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,
@@ -55,6 +55,9 @@ end
 
 local drawDebug = function()
   love.graphics.setLineWidth(.5)
+  love.graphics.setColor(0,255,0, 255)
+  love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+
   for _, v in ipairs(level.world:getItems()) do
     local b = v.layer and v.layer.name == "objects" and 255 or 0;
     love.graphics.setColor(255, 0, b, 20)

@@ -7,7 +7,7 @@ return {
   height = 13,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 28,
+  nextobjectid = 52,
   properties = {},
   tilesets = {
     {
@@ -25,8 +25,66 @@ return {
         y = 0
       },
       properties = {},
-      terrains = {},
+      terrains = {
+        {
+          name = "gnd",
+          tile = -1,
+          properties = {}
+        }
+      },
       tiles = {
+        {
+          id = 1,
+          terrain = { 0, 0, 0, 0 }
+        },
+        {
+          id = 2,
+          terrain = { -1, -1, 0, 0 }
+        },
+        {
+          id = 3,
+          terrain = { -1, -1, 0, -1 }
+        },
+        {
+          id = 4,
+          terrain = { -1, -1, -1, 0 }
+        },
+        {
+          id = 5,
+          terrain = { -1, 0, -1, 0 }
+        },
+        {
+          id = 6,
+          terrain = { -1, 0, 0, 0 }
+        },
+        {
+          id = 7,
+          terrain = { 0, -1, 0, -1 }
+        },
+        {
+          id = 8,
+          terrain = { 0, -1, 0, 0 }
+        },
+        {
+          id = 9,
+          terrain = { 0, 0, -1, -1 }
+        },
+        {
+          id = 11,
+          terrain = { -1, 0, -1, -1 }
+        },
+        {
+          id = 12,
+          terrain = { 0, -1, -1, -1 }
+        },
+        {
+          id = 16,
+          terrain = { 0, 0, 0, -1 }
+        },
+        {
+          id = 17,
+          terrain = { 0, 0, -1, 0 }
+        },
         {
           id = 18,
           objectGroup = {
@@ -56,6 +114,23 @@ return {
             {
               tileid = "32",
               duration = "150"
+            }
+          }
+        },
+        {
+          id = 33,
+          animation = {
+            {
+              tileid = "33",
+              duration = "100"
+            },
+            {
+              tileid = "34",
+              duration = "100"
+            },
+            {
+              tileid = "35",
+              duration = "100"
             }
           }
         }
@@ -104,18 +179,18 @@ return {
       },
       encoding = "lua",
       data = {
-        2, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 2,
-        8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6,
-        8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 16, 6,
-        8, 0, 0, 0, 5, 4, 0, 0, 5, 3, 3, 3, 7,
-        8, 0, 0, 0, 12, 13, 0, 0, 12, 2, 10, 10, 2,
-        8, 0, 16, 0, 0, 0, 0, 0, 0, 25, 0, 0, 6,
-        8, 0, 25, 0, 0, 0, 0, 0, 0, 25, 0, 0, 6,
-        8, 0, 25, 0, 5, 3, 3, 3, 3, 4, 0, 0, 6,
-        8, 0, 25, 0, 6, 2, 10, 10, 2, 8, 0, 0, 6,
-        8, 0, 0, 0, 12, 13, 0, 0, 12, 13, 0, 5, 7,
+        2, 2, 2, 2, 10, 10, 10, 10, 10, 10, 10, 10, 2,
+        2, 2, 2, 13, 0, 0, 0, 0, 0, 0, 0, 0, 6,
+        2, 10, 13, 0, 0, 0, 0, 0, 0, 0, 16, 16, 6,
+        8, 0, 0, 0, 0, 0, 0, 5, 3, 3, 3, 3, 7,
+        8, 0, 0, 0, 0, 0, 0, 12, 2, 2, 10, 10, 2,
+        8, 0, 5, 3, 3, 4, 0, 0, 6, 8, 0, 0, 6,
+        8, 0, 6, 10, 10, 13, 0, 0, 6, 8, 0, 0, 6,
+        8, 0, 25, 0, 0, 0, 0, 5, 7, 8, 0, 0, 6,
+        8, 0, 0, 0, 0, 0, 0, 12, 10, 13, 0, 5, 7,
         8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2,
-        9, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 7, 2,
+        9, 3, 3, 3, 3, 4, 0, 5, 3, 3, 3, 7, 2,
+        2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2,
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
       }
     },
@@ -133,8 +208,8 @@ return {
           name = "finish",
           type = "action",
           shape = "rectangle",
-          x = 336,
-          y = 204,
+          x = 352,
+          y = 192,
           width = 32,
           height = 32,
           rotation = 0,
@@ -143,121 +218,21 @@ return {
           properties = {}
         },
         {
-          id = 8,
-          name = "openwall",
-          type = "action",
-          shape = "rectangle",
-          x = 224,
-          y = 352,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 18,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 11,
+          id = 19,
           name = "key",
           type = "collect",
           shape = "rectangle",
           x = 32,
-          y = 288,
+          y = 256,
           width = 32,
           height = 32,
           rotation = 0,
           gid = 30,
           visible = true,
-          properties = {
-            ["movable"] = "true"
-          }
-        },
-        {
-          id = 12,
-          name = "snakeground",
-          type = "",
-          shape = "rectangle",
-          x = 128,
-          y = 352,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 12,
-          visible = true,
           properties = {}
         },
         {
-          id = 13,
-          name = "snakeground",
-          type = "",
-          shape = "rectangle",
-          x = 160,
-          y = 352,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 13,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 16,
-          name = "snakeground",
-          type = "",
-          shape = "rectangle",
-          x = 128,
-          y = 320,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 6,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 17,
-          name = "snakeground",
-          type = "",
-          shape = "rectangle",
-          x = 160,
-          y = 320,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 8,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 19,
-          name = "door",
-          type = "action",
-          shape = "rectangle",
-          x = 64,
-          y = 352,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 27,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 20,
-          name = "door",
-          type = "action",
-          shape = "rectangle",
-          x = 64,
-          y = 320,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          gid = 26,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 22,
+          id = 28,
           name = "shaman",
           type = "char",
           shape = "rectangle",
@@ -272,24 +247,52 @@ return {
           }
         },
         {
-          id = 23,
+          id = 32,
+          name = "door",
+          type = "action",
+          shape = "rectangle",
+          x = 64,
+          y = 320,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 27,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 33,
+          name = "door",
+          type = "action",
+          shape = "rectangle",
+          x = 64,
+          y = 288,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 26,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 38,
           name = "snake",
           type = "char",
           shape = "rectangle",
           x = 96,
-          y = 320,
-          width = 32,
+          y = 288,
+          width = 30,
           height = 32,
           rotation = 0,
           visible = true,
           properties = {}
         },
         {
-          id = 24,
+          id = 39,
           name = "flappyflap",
           type = "char",
           shape = "rectangle",
-          x = 64,
+          x = 96,
           y = 128,
           width = 32,
           height = 32,
@@ -298,25 +301,110 @@ return {
           properties = {}
         },
         {
-          id = 25,
-          name = "flappyflap",
-          type = "char",
+          id = 40,
+          name = "lava",
+          type = "action",
           shape = "rectangle",
-          x = 128,
-          y = 64,
+          x = 192,
+          y = 386,
           width = 32,
           height = 32,
           rotation = 0,
+          gid = 34,
           visible = true,
           properties = {}
         },
         {
-          id = 27,
+          id = 43,
+          name = "snakeground",
+          type = "",
+          shape = "rectangle",
+          x = 224,
+          y = 288,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 6,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 44,
+          name = "snakeground",
+          type = "",
+          shape = "rectangle",
+          x = 224,
+          y = 320,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 12,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 45,
+          name = "snakeground",
+          type = "",
+          shape = "rectangle",
+          x = 256,
+          y = 320,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 13,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 46,
+          name = "snakeground",
+          type = "",
+          shape = "rectangle",
+          x = 256,
+          y = 288,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 2,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 47,
+          name = "openwall",
+          type = "action",
+          shape = "rectangle",
+          x = 288,
+          y = 320,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 18,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 50,
           name = "box",
           type = "move",
           shape = "rectangle",
           x = 160,
-          y = 96,
+          y = 160,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 16,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 51,
+          name = "box",
+          type = "move",
+          shape = "rectangle",
+          x = 128,
+          y = 160,
           width = 32,
           height = 32,
           rotation = 0,

@@ -8,7 +8,7 @@ return {
     end
     map.objects[item.id].x = item.x
     map.objects[item.id].y = item.y+item.height
-    map:setObjectSpriteBatches(map.layers.objects)
+    map:setObjectSpriteBatches(map.layers.objects) -- FIXME this breaks tile animations for levels with movable objects
   end,
 
   removeObjectByItem = function(map, item)

@@ -3,7 +3,7 @@ local maputils = require "maputils"
 return require 'lib.hump.class' {
   __includes = {require "level"},
 
-  mapfile = "map/green.lua",
+  mapfile = "map/demo.lua",
 
   action = function(self, char, item)
     if char.name == "shaman" and item.name == "door" and char.inventory.key then -- TODO inventory check

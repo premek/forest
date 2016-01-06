@@ -752,8 +752,8 @@ function Map:update(dt)
 		local update = false
 
 		if tile.animation then
-			tile.time = tile.time + dt * 1000
 
+			tile.time = tile.time + dt * 1000
 			while tile.time > tonumber(tile.animation[tile.frame].duration) do
 				update     = true
 				tile.time  = tile.time  - tonumber(tile.animation[tile.frame].duration)
