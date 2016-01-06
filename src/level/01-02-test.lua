@@ -11,6 +11,5 @@ return require 'lib.hump.class' {
       char.inventory.key = nil
       maputils.removeObjectsByName(self.map, self.world, "door")
     end
-    if item.name == "finish" then self.finished = true end
   end,
 }

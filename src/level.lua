@@ -125,6 +125,7 @@ return require 'lib.hump.class' {
         --moving.speed.y = moving.speed.y * 0.5
       elseif other.type == "action" then
         -- level specific actions
+        self:globalActions(moving, other)
         if self.action then self:action(moving, other) end
       end
     end
@@ -137,6 +138,12 @@ return require 'lib.hump.class' {
     -- object specific actions
     if moving.collision then moving:collision(other, collision) end
     if other.collision then other:collision(moving, collision) end
+  end,
+
+  globalActions = function(self, moving, other)
+    if moving.type=="char" and moving.name=="shaman" and other.name == "finish" then
+      self.finished = true
+    end
   end,
 
   -- resolve physics (speed, grounding) for the object that just moved and colided

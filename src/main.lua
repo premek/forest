@@ -19,16 +19,20 @@ function love.load()
 
   levels = {
     require "level.01_test",
+    require "level.tut3",
+    require "level.tut4",
     require "level.01-02-test",
     require "level.02_test",
     require "level.99_last",
-    current = 0,
-    loadNext = function(self)
+    current = 2,
+    next = function(self)
       self.current = (self.current or 0) + 1
+    end,
+    load = function(self)
       return self[self.current]() -- instantiate the level
-    end
+    end,
   }
-  level = levels:loadNext()
+  level = levels:load()
 end
 
 function love.update(dt)
@@ -37,7 +41,8 @@ function love.update(dt)
   -- FIXME where to? cameraQ
   level.world.shake = math.max(0, (level.world.shake or 0) - dt)
 
-  if level.finished then level = levels:loadNext() end
+  if level.finished then levels:next(); level = levels:load() end
+  if level.dead then level = levels:load() end
 end
 
 
