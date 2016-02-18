@@ -3,7 +3,7 @@
 set -x
 
 P="Forest"
-LD="love-0.10.0-win32"
+LD="love-0.10.1-win32"
 
 
 if [ "$1" == "clean" ]; then 
