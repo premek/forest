@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="53">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="13" height="13" tilewidth="32" tileheight="32" nextobjectid="69">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
   <terraintypes>
@@ -47,35 +47,32 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJyVklEOgCAMQ5upoAYO4P0vqj9Lmk0pkrwPMlq2ggEw4hRYoEOvQt4z512zD+rbwxKoQtOQ5zTSsOc66IX3hbz6pOb6mCf2rzJo4d43D7X8bQ7kPD2DmHVF/gcMRP0vNzD9AjM=
+   eJxjYmBgYELCXAQwExrmZSAM2JDMJkY9TA8HkWoHQg8nELMgibECMTMezM6AGV6wcMGH0d2GT48oDj08DLjjFpc9hPxPrh5QuOELJ2xhBgCK9gHd
   </data>
  </layer>
  <objectgroup name="objects">
   <properties>
    <property name="collidable" value="true"/>
   </properties>
-  <object id="7" name="finish" type="action" gid="19" x="352" y="192" width="32" height="32"/>
-  <object id="28" name="shaman" type="char" x="32" y="288" width="32" height="32">
+  <object id="28" name="shaman" type="char" x="64" y="352" width="32" height="32">
    <properties>
     <property name="controlled" value="true"/>
    </properties>
   </object>
-  <object id="32" name="door" type="action" gid="27" x="64" y="320" width="32" height="32"/>
-  <object id="33" name="door" type="action" gid="26" x="64" y="288" width="32" height="32"/>
-  <object id="38" name="snake" type="char" x="96" y="288" width="30" height="32"/>
-  <object id="39" name="flappyflap" type="char" x="96" y="128" width="32" height="32"/>
-  <object id="40" name="lava" type="action" gid="34" x="192" y="386" width="32" height="32"/>
-  <object id="43" name="snakeground" gid="6" x="224" y="288" width="32" height="32"/>
-  <object id="44" name="snakeground" gid="12" x="224" y="320" width="32" height="32"/>
-  <object id="45" name="snakeground" gid="13" x="256" y="320" width="32" height="32"/>
-  <object id="46" name="snakeground" gid="2" x="256" y="288" width="32" height="32"/>
-  <object id="47" name="openwall" type="action" gid="18" x="288" y="320" width="32" height="32"/>
-  <object id="50" name="box" type="move" gid="16" x="288" y="96" width="32" height="32"/>
-  <object id="51" name="box" type="move" gid="16" x="128" y="160" width="32" height="32"/>
-  <object id="52" name="key" type="move" gid="30" x="128" y="128" width="32" height="32">
+  <object id="39" name="flappyflap" type="char" x="32" y="128" width="32" height="32"/>
+  <object id="52" name="key" type="collect" gid="30" x="320" y="192" width="32" height="32">
    <properties>
     <property name="collectable" value="true"/>
    </properties>
   </object>
+  <object id="53" name="door" type="action" gid="27" x="160" y="384" width="32" height="32"/>
+  <object id="54" name="door" type="action" gid="26" x="160" y="352" width="32" height="32"/>
+  <object id="55" name="finish" type="action" gid="19" x="288" y="384" width="32" height="32"/>
+  <object id="57" name="box" type="move" gid="16" x="160" y="192" width="32" height="32"/>
+  <object id="64" name="box" type="move" gid="16" x="192" y="160" width="32" height="32"/>
+  <object id="65" name="box" type="move" gid="16" x="224" y="192" width="32" height="32"/>
+  <object id="66" name="box" type="move" gid="16" x="160" y="160" width="32" height="32"/>
+  <object id="67" name="box" type="move" gid="16" x="192" y="192" width="32" height="32"/>
+  <object id="68" name="box" type="move" gid="16" x="192" y="128" width="32" height="32"/>
  </objectgroup>
 </map>

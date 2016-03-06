@@ -1,9 +1,11 @@
 local love = love
 local Character = require "char.character"
+local vector = require "lib.hump.vector"
 
 return require 'lib.hump.class' {
   __includes = {Character},
   img = "img/flappyflap.png",
+  cannotCollect = 0,
 
   animate = function(self, dt)
     if not self.grounded then
@@ -16,18 +18,22 @@ return require 'lib.hump.class' {
 
   update = function(self, dt)
     Character.update(self, dt)
+    self.cannotCollect = self.cannotCollect - dt
     if self.holding then
+      -- if holded item is held back by something else (wall, ...) and cannot move with the holder
+      local diff = vector(self.holding.x, self.holding.y) - vector(self.x, self.y)
+      self.x = self.x + diff.x/2
+      -- move the holded item
+      self.holding.speed.x = self.speed.x
+      self.holding.speed.y = self.speed.y
+      self.holding.y = self.y+25
       self.holding.x = self.x
-      self.holding.y = self.y+10
-      self.holding.speed.x = 0
-      self.holding.speed.y = 0
+
     end
   end,
 
   collect = function(self, item)
-    self.holding = item
-    --self.inventory[item.name] = 1
-    --return true
+    if self.cannotCollect < 0 then self.holding = item end
     return false -- do not collect / remove item
   end,
 
@@ -46,7 +52,7 @@ return require 'lib.hump.class' {
     end
     if love.keyboard.isDown('space') then
       if self.holding then
-        self.holding.y = self.holding.y + 33 -- TODO: do not collect for a while after dropping?
+        self.cannotCollect = 1.5
         self.holding = nil
         end
     end

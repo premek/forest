@@ -1,7 +1,6 @@
 local love = love
 local sti = require "lib.sti"
 local bump = require "lib.bump"
-local maputils = require "maputils"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 
 return require 'lib.hump.class' {
@@ -17,10 +16,7 @@ return require 'lib.hump.class' {
     end
 
     self.world = bump.newWorld()
-
     self.map = sti.new(self.mapfile, { "bump" })
-
-    self.objects = self.map.layers.objects.objects
 
     for _,obj in ipairs(self.map.layers.objects.objects) do
       local tile = self.map.tiles[obj.gid]
@@ -37,7 +33,10 @@ return require 'lib.hump.class' {
       if obj.gid then obj.y = obj.y - obj.height end
     end
 
+    local objects = self.map.layers.objects.objects
     local objLayer = self.map:convertToCustomLayer("objects")
+    self.map.layers.objects.objects = objects
+
     local level = self
 
     objLayer.update = function(layer, dt)
@@ -60,26 +59,23 @@ return require 'lib.hump.class' {
     self.map:bump_init(self.world) 	--- Adds each collidable tile to the Bump world.
 
     self.chars = {}
-
     local controlled
-    for k, o in ipairs(self.objects) do
+    for k, o in ipairs(self.map.layers.objects.objects) do
       if o.type == "char" then
         local CH = require ("char."..o.name)
         local ch = CH(o.x, o.y, o.width, o.height, o.name)
         ch:load()
-        self.objects[k] = ch -- FIXME
+        self.map.layers.objects.objects[k] = ch -- FIXME
         table.insert(self.chars, ch)
         if o.properties and o.properties.controlled then controlled = ch end
       end
 
-      if o.type == "move" then
+      if o.type == "collect" or o.type == "move" then
         o.speed = vector(0,0)
       end
     end
 
-    objLayer.objects = self.objects -- FIXME AAaaaa!
-
-    for _, o in ipairs(self.objects) do
+    for _, o in ipairs(self.map.layers.objects.objects) do
       self.world:add(o, o.x, o.y, o.width, o.height)
     end
 
@@ -90,7 +86,7 @@ return require 'lib.hump.class' {
 
   update = function(self, dt)
     self.map:update(dt)
-    for _,o in ipairs(self.objects) do
+    for _,o in ipairs(self.map.layers.objects.objects) do
     if o.speed and self.world:hasItem(o) then -- check if it was not removed in this same iteration by another item
 
       if o.speed:len() < 0.1 then o.speed = vector(0,0) end
@@ -138,10 +134,11 @@ return require 'lib.hump.class' {
 
     if levelColType then return levelColType end
     if other.type == "action"
-    or (other.properties and other.properties.collectable)
+    or other.type == "collect"
     or other.type == "char" then
       return 'cross'
-    else return "slide"
+    else
+      return "slide"
     end
     --if     other.isCoin   then return 'cross'
     --elseif other.isWall   then return 'slide'
@@ -157,10 +154,10 @@ return require 'lib.hump.class' {
     -- general actions on objects
     if other.layer and other.layer.name == "objects" then
       --print("Object collision", moving.name, moving.type, ",", other.name, other.type)
-      if other.properties.collectable and moving.collect and moving:collect(other) then
+      if other.type == "collect" and moving.collect and moving:collect(other) then
         self.world:remove(other)
-        for k, obj in ipairs(self.objects) do
-          if obj.id == other.id then print("r", table.remove(self.objects, k)) end
+        for k, obj in ipairs(self.map.layers.objects.objects) do
+          if obj.id == other.id then table.remove(self.map.layers.objects.objects, k) end
         end
       elseif other.type == "move" then
         other.speed.x = other.speed.x - collision.normal.x * 0.5
@@ -174,7 +171,7 @@ return require 'lib.hump.class' {
       end
     end
 
-    if not (other.properties and other.properties.collectable)
+    if other.type ~= "collect"
       and other.type ~= "action"
       and other.type ~= "char" then
       self:physics(moving, collision)

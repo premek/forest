@@ -1,10 +1,10 @@
 local love = love
 local camera = require 'lib.hump.camera'
 
-require "util"
+require "lib.util"
 
 
-local debug = true
+local debug = false
 
 local cam, levels, level
 
@@ -23,8 +23,9 @@ function love.load()
     require "level.tut4",
     require "level.01-02-test",
     require "level.02_test",
+    require "level.demo2",
     require "level.99_last",
-    current = 5,
+    current = 6,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,
@@ -65,7 +66,7 @@ local drawDebug = function()
     love.graphics.setColor(255, 0, b)
     love.graphics.rectangle("line", level.world:getRect(v))
   end
-  for _, ch in ipairs(level.objects) do
+  for _, ch in ipairs(level.map.layers.objects.objects) do
     if ch.speed then drawVector(0,255,0, 2, ch.x, ch.y, ch.speed) end
 
     love.graphics.setColor(0,0,255, 255)

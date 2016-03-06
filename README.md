@@ -28,5 +28,14 @@ For testing the **latest version from git**:
 - drag and drop downloaded 'src' folder onto love.exe
 - OR run it with `love path/to/src` (path to the directory containing main.lua file) from command line
 
+## Playing
+Controls for the demo:
+- arrows: move (different for each character)
+- tab: switch characters
+- space: drop the held item
+- Esc: quit
+- d: debug view
+
+
 ## Reporting Bugs
 Please fill in a [new issue](https://github.com/premek/forest/issues/new) on GitHub
