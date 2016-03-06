@@ -1,13 +1,5 @@
 return {
 
-  removeObjectByItem = function(map, item)
-    for k, obj in ipairs(map.layers.objects.objects) do
-      if obj.id == item.id then
-        table.remove(map.layers.objects.objects, k)
-      end
-    end
-  end,
-
 
   removeObjectsByName = function(map, world, name)
     local kept = {}
@@ -19,7 +11,7 @@ return {
       end
     end
     map.layers.objects.objects = kept
-    map:setObjectSpriteBatches(map.layers.objects)
+    --map:setObjectSpriteBatches(map.layers.objects)
 
     for _, v in ipairs(world:getItems()) do
       if v.name == name then world:remove(v) end

@@ -20,7 +20,7 @@ return require 'lib.hump.class' {
 
     self.map = sti.new(self.mapfile, { "bump" })
 
-    local objects = {}
+    self.objects = self.map.layers.objects.objects
 
     for _,obj in ipairs(self.map.layers.objects.objects) do
       local tile = self.map.tiles[obj.gid]
@@ -35,23 +35,21 @@ return require 'lib.hump.class' {
       obj._tileInst = tileI
       if tile then obj._currentQuad = tile.quad end -- for animations, see update()
       if obj.gid then obj.y = obj.y - obj.height end
-      table.insert(objects, obj)
     end
 
     local objLayer = self.map:convertToCustomLayer("objects")
-    objLayer.objects = objects
     local level = self
 
-    function objLayer:update(dt)
-      for _, o in pairs(self.objects) do
+    objLayer.update = function(layer, dt)
+      for _, o in pairs(layer.objects) do
         if o._tile and o._tile.animation then
           o._currentQuad = level.map.tiles[tonumber(o._tile.animation[o._tile.frame].tileid) + level.map.tilesets[o._tile.tileset].firstgid].quad
         end
       end
     end
 
-    function objLayer:draw()
-        for _, o in pairs(self.objects) do
+    objLayer.draw = function(layer)
+        for _, o in pairs(layer.objects) do
           if o._tile then
             love.graphics.draw(level.map.tilesets[o._tile.tileset].image, o._currentQuad, o.x, o.y)
           end
@@ -62,27 +60,29 @@ return require 'lib.hump.class' {
     self.map:bump_init(self.world) 	--- Adds each collidable tile to the Bump world.
 
     self.chars = {}
-    self.movables = {}
 
     local controlled
-    for _, o in ipairs(objects) do
-      self.world:add(o, o.x, o.y, o.width, o.height)
-
+    for k, o in ipairs(self.objects) do
       if o.type == "char" then
         local CH = require ("char."..o.name)
         local ch = CH(o.x, o.y, o.width, o.height, o.name)
         ch:load()
-        self.world:remove(o)
-        self.world:add(ch, ch.x, ch.y, ch.width, ch.height)
+        self.objects[k] = ch -- FIXME
         table.insert(self.chars, ch)
-        table.insert(self.movables, ch)
         if o.properties and o.properties.controlled then controlled = ch end
       end
+
       if o.type == "move" then
         o.speed = vector(0,0)
-        table.insert(self.movables, o)
       end
     end
+
+    objLayer.objects = self.objects -- FIXME AAaaaa!
+
+    for _, o in ipairs(self.objects) do
+      self.world:add(o, o.x, o.y, o.width, o.height)
+    end
+
     if controlled then controlled.isControlled = true
     elseif #self.chars > 0 then self.chars[1].isControlled = true
     end
@@ -90,8 +90,8 @@ return require 'lib.hump.class' {
 
   update = function(self, dt)
     self.map:update(dt)
-
-    for _,o in ipairs(self.movables) do
+    for _,o in ipairs(self.objects) do
+    if o.speed and self.world:hasItem(o) then -- check if it was not removed in this same iteration by another item
 
       if o.speed:len() < 0.1 then o.speed = vector(0,0) end
 
@@ -128,6 +128,7 @@ return require 'lib.hump.class' {
         end
       end
     end
+    end
   end,
 
   getCollisionType = function(self, moving, other)
@@ -137,7 +138,7 @@ return require 'lib.hump.class' {
 
     if levelColType then return levelColType end
     if other.type == "action"
-    or other.type == "collect"
+    or (other.properties and other.properties.collectable)
     or other.type == "char" then
       return 'cross'
     else return "slide"
@@ -156,9 +157,11 @@ return require 'lib.hump.class' {
     -- general actions on objects
     if other.layer and other.layer.name == "objects" then
       --print("Object collision", moving.name, moving.type, ",", other.name, other.type)
-      if other.type == "collect" and moving.collect and moving:collect(other) then
+      if other.properties.collectable and moving.collect and moving:collect(other) then
         self.world:remove(other)
-        maputils.removeObjectByItem(self.map, other)
+        for k, obj in ipairs(self.objects) do
+          if obj.id == other.id then print("r", table.remove(self.objects, k)) end
+        end
       elseif other.type == "move" then
         other.speed.x = other.speed.x - collision.normal.x * 0.5
         other.speed.y = other.speed.y - collision.normal.y *  0.5 -- dt? moving.speed?
@@ -171,7 +174,7 @@ return require 'lib.hump.class' {
       end
     end
 
-    if other.type ~= "collect"
+    if not (other.properties and other.properties.collectable)
       and other.type ~= "action"
       and other.type ~= "char" then
       self:physics(moving, collision)

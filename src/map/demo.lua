@@ -7,7 +7,7 @@ return {
   height = 13,
   tilewidth = 32,
   tileheight = 32,
-  nextobjectid = 52,
+  nextobjectid = 53,
   properties = {},
   tilesets = {
     {
@@ -220,7 +220,7 @@ return {
         {
           id = 19,
           name = "key",
-          type = "collect",
+          type = "move",
           shape = "rectangle",
           x = 32,
           y = 256,
@@ -229,7 +229,9 @@ return {
           rotation = 0,
           gid = 30,
           visible = true,
-          properties = {}
+          properties = {
+            ["collectable"] = "true"
+          }
         },
         {
           id = 28,
@@ -411,6 +413,22 @@ return {
           gid = 16,
           visible = true,
           properties = {}
+        },
+        {
+          id = 52,
+          name = "key",
+          type = "move",
+          shape = "rectangle",
+          x = 128,
+          y = 128,
+          width = 32,
+          height = 32,
+          rotation = 0,
+          gid = 30,
+          visible = true,
+          properties = {
+            ["collectable"] = "true"
+          }
         }
       }
     }

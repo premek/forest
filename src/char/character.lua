@@ -43,6 +43,7 @@ return require 'lib.hump.class' {
   animate = function(self, dt) end,
 
   collect = function(self, item)
+    print(item)
     -- TODO inventory count check
     local c = 0
     for _,amount in pairs(self.inventory) do c = c + amount end

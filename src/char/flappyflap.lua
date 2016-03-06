@@ -14,9 +14,20 @@ return require 'lib.hump.class' {
     end
   end,
 
+  update = function(self, dt)
+    Character.update(self, dt)
+    if self.holding then
+      self.holding.x = self.x
+      self.holding.y = self.y+10
+      self.holding.speed.x = 0
+      self.holding.speed.y = 0
+    end
+  end,
+
   collect = function(self, item)
-    --self.holding = item
-    --self.inventory.holding = item.name
+    self.holding = item
+    --self.inventory[item.name] = 1
+    --return true
     return false -- do not collect / remove item
   end,
 
@@ -34,13 +45,10 @@ return require 'lib.hump.class' {
       self.facing = 1
     end
     if love.keyboard.isDown('space') then
-      local i,a,c = pairs(self.inventory) -- FIXME do it nicer
-      local item, _ = i(a,c)
-      if item then
-        print("drop " .. item) -- TODO
-
-        self.inventory = {}
-      end
+      if self.holding then
+        self.holding.y = self.holding.y + 33 -- TODO: do not collect for a while after dropping?
+        self.holding = nil
+        end
     end
   end,
 
