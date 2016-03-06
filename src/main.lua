@@ -100,5 +100,6 @@ end
 function love.keypressed(key)
   level:keypressed(key)
   if key=='d' then debug = not debug end
+  if key=='r' then level = levels:load() end
   if key=='escape' then love.event.quit() end
 end

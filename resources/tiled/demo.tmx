@@ -47,7 +47,7 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJyVkuEKgCAQg8dVaqHQ397/RTNIGGe2Er4f4m3eTQ2AEZvAHAV6BfJW9fvNpUkvdUtlckShyejnNNKw5+z6T4N9IK/yUXMM5vH9qwyyu/fJQ632Niv6PFsGPuuI/h8wEOd/OQFzPQJT
+   eJyVklEOgCAMQ5upoAYO4P0vqj9Lmk0pkrwPMlq2ggEw4hRYoEOvQt4z512zD+rbwxKoQtOQ5zTSsOc66IX3hbz6pOb6mCf2rzJo4d43D7X8bQ7kPD2DmHVF/gcMRP0vNzD9AjM=
   </data>
  </layer>
  <objectgroup name="objects">
@@ -71,7 +71,7 @@
   <object id="45" name="snakeground" gid="13" x="256" y="320" width="32" height="32"/>
   <object id="46" name="snakeground" gid="2" x="256" y="288" width="32" height="32"/>
   <object id="47" name="openwall" type="action" gid="18" x="288" y="320" width="32" height="32"/>
-  <object id="50" name="box" type="move" gid="16" x="160" y="160" width="32" height="32"/>
+  <object id="50" name="box" type="move" gid="16" x="288" y="96" width="32" height="32"/>
   <object id="51" name="box" type="move" gid="16" x="128" y="160" width="32" height="32"/>
  </objectgroup>
 </map>

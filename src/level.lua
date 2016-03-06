@@ -19,26 +19,68 @@ return require 'lib.hump.class' {
     self.world = bump.newWorld()
 
     self.map = sti.new(self.mapfile, { "bump" })
+
+    local objects = {}
+
+    for _,obj in ipairs(self.map.layers.objects.objects) do
+      local tile = self.map.tiles[obj.gid]
+      local tileI
+      if tile ~= nil then -- else it is just a shape object without image
+        for _, tileInst in ipairs(self.map.tileInstances[tile.gid]) do
+          if tileInst.gid == tile.gid then tileI = tileInst; break end
+        end
+      end
+
+      obj._tile = tile
+      obj._tileInst = tileI
+      if tile then obj._currentQuad = tile.quad end -- for animations, see update()
+      if obj.gid then obj.y = obj.y - obj.height end
+      table.insert(objects, obj)
+    end
+
+    local objLayer = self.map:convertToCustomLayer("objects")
+    objLayer.objects = objects
+    local level = self
+
+    function objLayer:update(dt)
+      for _, o in pairs(self.objects) do
+        if o._tile and o._tile.animation then
+          o._currentQuad = level.map.tiles[tonumber(o._tile.animation[o._tile.frame].tileid) + level.map.tilesets[o._tile.tileset].firstgid].quad
+        end
+      end
+    end
+
+    function objLayer:draw()
+        for _, o in pairs(self.objects) do
+          if o._tile then
+            love.graphics.draw(level.map.tilesets[o._tile.tileset].image, o._currentQuad, o.x, o.y)
+          end
+        end
+    end
+
+
     self.map:bump_init(self.world) 	--- Adds each collidable tile to the Bump world.
 
     self.chars = {}
     self.movables = {}
+
     local controlled
-    for _, item in ipairs(self.world:getItems()) do
-      if item.type == "char" then
-        maputils.removeObjectByItem(self.map, item)
-        local CH = require ("char."..item.name)
-        local ch = CH(item.x, item.y, item.width, item.height, item.name)
+    for _, o in ipairs(objects) do
+      self.world:add(o, o.x, o.y, o.width, o.height)
+
+      if o.type == "char" then
+        local CH = require ("char."..o.name)
+        local ch = CH(o.x, o.y, o.width, o.height, o.name)
         ch:load()
-        self.world:remove(item)
+        self.world:remove(o)
         self.world:add(ch, ch.x, ch.y, ch.width, ch.height)
         table.insert(self.chars, ch)
         table.insert(self.movables, ch)
-        if item.properties and item.properties.controlled then controlled = ch end
+        if o.properties and o.properties.controlled then controlled = ch end
       end
-      if item.type == "move" then
-        item.speed = vector(0,0)
-        table.insert(self.movables, item)
+      if o.type == "move" then
+        o.speed = vector(0,0)
+        table.insert(self.movables, o)
       end
     end
     if controlled then controlled.isControlled = true
@@ -52,6 +94,7 @@ return require 'lib.hump.class' {
     for _,o in ipairs(self.movables) do
 
       if o.speed:len() < 0.1 then o.speed = vector(0,0) end
+
       o.speed = o.speed + self.gravity
       -- TODO 0 friction in air, else other objects friction - implement mud, ice, ...
       o.speed.x = o.speed.x * .9
@@ -64,12 +107,10 @@ return require 'lib.hump.class' {
           speed = o.speed:clone(),
         }
         local cols
+
         o.x, o.y, cols, _ =
           self.world:move(o, o.x + o.speed.x, o.y + o.speed.y,
             function (o1, o2) return self:getCollisionType(o1, o2) end)
-
-        -- map objects has .id, chars dont
-        if o.id then maputils.moveObjectByItem(self.map, o) end
 
         o.grounded = false
 

@@ -1,15 +1,4 @@
 return {
-  moveObjectByItem = function(map, item)
-    for k, obj in ipairs(map.layers.objects.objects) do
-      if obj.id == item.id then
-        map.layers.objects.objects[k].x = item.x
-        map.layers.objects.objects[k].y = item.y+item.height
-      end
-    end
-    map.objects[item.id].x = item.x
-    map.objects[item.id].y = item.y+item.height
-    map:setObjectSpriteBatches(map.layers.objects) -- FIXME this breaks tile animations for levels with movable objects
-  end,
 
   removeObjectByItem = function(map, item)
     for k, obj in ipairs(map.layers.objects.objects) do
@@ -17,9 +6,8 @@ return {
         table.remove(map.layers.objects.objects, k)
       end
     end
-    table.remove(map.objects, item.id)
-    map:setObjectSpriteBatches(map.layers.objects)
   end,
+
 
   removeObjectsByName = function(map, world, name)
     local kept = {}
