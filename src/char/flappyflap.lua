@@ -52,7 +52,7 @@ return require 'lib.hump.class' {
     end
     if love.keyboard.isDown('space') then
       if self.holding then
-        self.cannotCollect = 1.5
+        self.cannotCollect = 1
         self.holding = nil
         end
     end

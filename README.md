@@ -35,6 +35,7 @@ Controls for the demo:
 - space: drop the held item
 - Esc: quit
 - d: debug view
+- r: restart level
 
 
 ## Reporting Bugs

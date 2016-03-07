@@ -6,7 +6,7 @@ return require 'lib.hump.class' {
 
   action = function(self, moving, other)
     if other.type=="action" and other.name == "button" then
-      print("button pressed", moving.type, moving.name)
+      --print("button pressed", moving.type, moving.name)
 
     end
   end,

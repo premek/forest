@@ -2,6 +2,8 @@ local love = love
 local sti = require "lib.sti"
 local bump = require "lib.bump"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
+local Signal = require 'lib.hump.signal'
+
 
 return require 'lib.hump.class' {
   -- XXX do I need classes? or just level data + level controller?
@@ -89,7 +91,13 @@ return require 'lib.hump.class' {
     for _,o in ipairs(self.map.layers.objects.objects) do
     if o.speed and self.world:hasItem(o) then -- check if it was not removed in this same iteration by another item
 
-      if o.speed:len() < 0.1 then o.speed = vector(0,0) end
+      local original = {
+        grounded = o.grounded,
+        speed = o.speed:clone(),
+      }
+
+      local speedLen = o.speed:len()
+      if speedLen < 0.1 and speedLen > 0 then o.speed = vector(0,0) end
 
       o.speed = o.speed + self.gravity
       -- TODO 0 friction in air, else other objects friction - implement mud, ice, ...
@@ -98,31 +106,29 @@ return require 'lib.hump.class' {
       if o.update then o:update(dt) end
 
       if o.speed:len() ~= 0 then
-        local original = {
-          grounded = o.grounded,
-          speed = o.speed:clone(),
-        }
         local cols
-
         o.x, o.y, cols, _ =
           self.world:move(o, o.x + o.speed.x, o.y + o.speed.y,
             function (o1, o2) return self:getCollisionType(o1, o2) end)
-
         o.grounded = false
-
         for _, col in ipairs(cols) do
           self:collision(o, col.other, col)
         end
-
         -- TODO some tollerance
         -- to be able to jump up between 2 tiles
         -- or to fall down into a hole of size of 1 tile
-
-        if o.grounded and not original.grounded then
-          -- FIXME store somewhere else than in "world"
-          self.world.shake = original.speed.y * .07 - .2 -- FIXME only for long jumps
-        end
       end
+      if o.grounded and not original.grounded then
+        Signal.emit('object_landed', o)
+        -- FIXME store somewhere else than in "world"
+        self.world.shake = original.speed.y * .07 - .2 -- FIXME only for long jumps
+      elseif not o.grounded and original.grounded then Signal.emit('object_takeoff', o)
+      end
+
+      if o.grounded and o.speed.x ~= 0 and original.speed.x == 0 then Signal.emit("object_slide_start")
+      elseif o.grounded and o.speed.x == 0 and original.speed.x ~= 0 then Signal.emit("object_slide_stop")
+      end
+
     end
     end
   end,
@@ -156,6 +162,7 @@ return require 'lib.hump.class' {
       --print("Object collision", moving.name, moving.type, ",", other.name, other.type)
       if other.type == "collect" and moving.collect and moving:collect(other) then
         self.world:remove(other)
+        Signal.emit("object-collected", moving, other)
         for k, obj in ipairs(self.map.layers.objects.objects) do
           if obj.id == other.id then table.remove(self.map.layers.objects.objects, k) end
         end
@@ -184,9 +191,11 @@ return require 'lib.hump.class' {
   globalActions = function(self, moving, other)
     if moving.type=="char" and moving.name=="shaman" and other.name == "finish" then
       self.finished = true
+      Signal.emit("level-finished", self)
     end
     if moving.type=="char" and other.name == "lava" then
       print("died")
+      Signal.emit("char-died", moving)
       self.dead = true
     end
   end,

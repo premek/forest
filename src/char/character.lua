@@ -33,6 +33,7 @@ return require 'lib.hump.class' {
     for i=1,self.quadsNum do
       self.quads[i] = love.graphics.newQuad(32*(i-1), 0, 32, 32, dx, dy)
     end
+
   end,
 
   update = function(self, dt)

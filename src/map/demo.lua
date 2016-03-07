@@ -401,7 +401,7 @@ return {
         {
           id = 52,
           name = "key",
-          type = "move",
+          type = "collect",
           shape = "rectangle",
           x = 128,
           y = 128,

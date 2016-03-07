@@ -3,10 +3,12 @@ local camera = require 'lib.hump.camera'
 
 require "lib.util"
 
+require "sfx"
+
 
 local debug = false
 
-local cam, levels, level
+local cam, levels, level, music
 
 local zoom = 2
 
@@ -22,10 +24,10 @@ function love.load()
     require "level.tut3",
     require "level.tut4",
     require "level.01-02-test",
-    require "level.02_test",
     require "level.demo2",
+    require "level.02_test",
     require "level.99_last",
-    current = 6,
+    current = 1,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,
@@ -34,6 +36,11 @@ function love.load()
     end,
   }
   level = levels:load()
+
+  music = love.audio.newSource( 'music/03 - Solxis - Rainforest.mp3', 'stream' )
+  music:setLooping( true )
+  music:play()
+
 end
 
 function love.update(dt)
