@@ -68,7 +68,8 @@ git checkout 6fa910c2a28936c3ec4eaafb014405a765382e08
 git submodule update --init --recursive
 
 cd debug
-python ../emscripten/tools/file_packager.py game.data --preload ../../src/@/ --js-output=game.js
+python ../emscripten/tools/file_packager.py game.data --preload ../../../src/@/ --js-output=game.js
+# python -m SimpleHTTPServer 8000
 cd ../..
 mv love.js/release-compatibility "$P-web"
 zip -9 -r - "$P-web" > "${P}-web.zip"
