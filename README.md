@@ -5,7 +5,7 @@
 For the latest relased version, download it from the [releases](https://github.com/premek/forest/releases) page.
 
 ### Windows executable
-- Download **.zip** version
+- Download **Forest-win.zip** version
 - unpack
 - run the **.exe** file
 
