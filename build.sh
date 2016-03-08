@@ -6,11 +6,34 @@ P="Forest"
 LD="love-0.10.1-win32"
 
 
+### clean
+
 if [ "$1" == "clean" ]; then 
  rm -r "target"
  exit;
 fi
 
+
+### deploy
+
+if [ "$1" == "deploy" ]; then 
+ # $2 = premek/forest
+
+ cd target/Forest-web
+ git init
+ git config user.name "autodeploy"
+ git config user.email "autodeploy"
+ touch .
+ git add .
+ git commit -m "deploy to github pages"
+ git push --force --quiet "https://${GH_TOKEN}@github.com/${2}.git" master:gh-pages
+  
+ exit;
+fi
+
+
+
+##### build #####
 
 find . -iname "*.lua" | xargs luac -p || { echo 'luac parse test failed' ; exit 1; }
 

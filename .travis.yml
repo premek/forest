@@ -19,3 +19,8 @@ deploy:
   on:
     tags: true
     all_branches: true
+after_success:
+  - "[[ -n $TRAVIS_TAG ]] && ./build.sh deploy premek/forest"
+env:
+  global:
+    secure: LLfq9nWX+LfDVQWH3q0T0Kwvuk2bCKCA4lYEkmrr/UaAmh29DM9C7yrwnXcvhw3Lz5RjTugnjzEJWDkDzJfRfvEmQuEFcE/UCPkAreXeO0z8n6pd62ip6S43IzE2qRsuvZdcwiHCEMHSwb+mdvz8HgoJ/p90Le8OYOr5ikMou5HhLMvI+cM10G5vRDFNZ+QzbFTiiaPox8y2a4RjcmzJV4JFnLtIhNmdseJJjGW5+zL4mDBH4dxRISqFl8VePnea/SZv0htekwovY577mrcYYF1bnPnKzlk56Vaw61yJGVWvuo4jiF6kIjGWBeTAMcVGmQxzzpr+zwpRZ9flVxsh26RxvN0zaVL2TytCP+mDCAxLUrVJjAfd/3QlE1bo6GGY9FAnC8/xg6SO9ju0bEwweQBTukiHcZoYwIW+2xSF1zqi0gbANgL8epLjdBmhZpKX0uTlOZfNtvJBDaT5X8djZYsB5s3p7vdn5VGSGNUZ0BP623/4gdzzAhSY+slmN0wsFaJajhKNWwZQFPGcWRplXyPM8m7KgbZU+0qA358l/Ks7ACupulnLp1px7JlnfD3t5HvST+g6kYWtk2QL54No9Nyv7m5IxnBbY1B6Iu7LzJzdo69GoWh46B9oRC8kYdQmDiqkrjT+d8PITd3RyAPgN+bQI7L3svNBdPE63BCe+Ec=
