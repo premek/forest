@@ -5,6 +5,7 @@ addons:
   apt:
     packages:
     - lua5.1
+    - python2.7
 script: "./build.sh"
 deploy:
   provider: releases
