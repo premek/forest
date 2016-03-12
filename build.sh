@@ -70,6 +70,8 @@ git submodule update --init --recursive
 
 cd release-compatibility
 python ../emscripten/tools/file_packager.py game.data --preload ../../../src/@/ --js-output=game.js
+python ../emscripten/tools/file_packager.py game.data --preload ../../../src/@/ --js-output=game.js
+#yes, two times!
 # python -m SimpleHTTPServer 8000
 cd ../..
 cp -r love.js/release-compatibility "$P-web"

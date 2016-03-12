@@ -1,6 +1,9 @@
 
 [![Build Status](https://travis-ci.org/premek/forest.svg?branch=master)](https://travis-ci.org/premek/forest)
 
+## Playing online
+Demo web build available here: http://premek.github.io/forest/
+
 ## Downloading and running
 For the latest relased version, download it from the [releases](https://github.com/premek/forest/releases) page.
 
@@ -40,3 +43,11 @@ Controls for the demo:
 
 ## Reporting Bugs
 Please fill in a [new issue](https://github.com/premek/forest/issues/new) on GitHub
+
+## Thanks
+- Powered by [LÖVE](https://love2d.org/)
+- Written in Lua
+- Maps made with [Tiled](http://www.mapeditor.org/)
+- Web build possible thanks to https://github.com/TannerRogalsky/love.js
+- Autobuilds of Windows binaries, .love, web builds and deployment to GitHub Releases and GitHub Pages by [Travis CI](https://travis-ci.org/)
+- Game idea by @Khanecz
