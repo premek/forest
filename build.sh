@@ -9,7 +9,7 @@ LD="love-0.10.1-win32"
 ### clean
 
 if [ "$1" == "clean" ]; then 
- rm -r "target"
+ rm -rf "target"
  exit;
 fi
 

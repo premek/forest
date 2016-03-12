@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="38" height="38" tilewidth="32" tileheight="32" nextobjectid="55">
+ <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
+  <image source="../../src/img/green.png" width="256" height="256"/>
+  <terraintypes>
+   <terrain name="gnd" tile="-1"/>
+  </terraintypes>
+  <tile id="1" terrain="0,0,0,0"/>
+  <tile id="2" terrain=",,0,0"/>
+  <tile id="3" terrain=",,0,"/>
+  <tile id="4" terrain=",,,0"/>
+  <tile id="5" terrain=",0,,0"/>
+  <tile id="6" terrain=",0,0,0"/>
+  <tile id="7" terrain="0,,0,"/>
+  <tile id="8" terrain="0,,0,0"/>
+  <tile id="9" terrain="0,0,,"/>
+  <tile id="11" terrain=",0,,"/>
+  <tile id="12" terrain="0,,,"/>
+  <tile id="16" terrain="0,0,0,"/>
+  <tile id="17" terrain="0,0,,0"/>
+  <tile id="18">
+   <objectgroup draworder="index"/>
+  </tile>
+  <tile id="29">
+   <animation>
+    <frame tileid="29" duration="150"/>
+    <frame tileid="30" duration="150"/>
+    <frame tileid="31" duration="150"/>
+    <frame tileid="32" duration="150"/>
+   </animation>
+  </tile>
+  <tile id="33">
+   <animation>
+    <frame tileid="33" duration="100"/>
+    <frame tileid="34" duration="100"/>
+    <frame tileid="35" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer name="sky" width="38" height="38">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJAAAIA7G6/9JuUQRzcP8kkq43pbm4uLi4uLi4uLi4uLi4Prkk9VvnqwKl
+  </data>
+ </layer>
+ <layer name="ground" width="38" height="38">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztls0KxDAIhEP3p91l+/6vu5tDoAxGo5nAHizMpQTzqaNkK6VsqVQqRdCbLAbTUfjfk8B1/iHXCqZZLuzf46dbR/fOWfzP5qr37I4c2r2vTh5aLA/Xp+jzhf1u51fsBsYcavlEubAHPa9EP8au0LwyIimnKBe77sgW4ZK8ZXlfywNnw5rvlZ5v9ZBiRXvo2amWf3qxGPWy8tNq4o01eg96QfKQxlV9f63nzM7FXW/V0fIQy2OYo9UT616MF+WqOoUYUS6Wz3r+8nDhvmPvr2t8fDdoXNoX7aHkBy2+hytaK22GGFyz74iR98PuOMt6r6ZSqVTVF1tgDbs=
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
+  <object id="7" name="finish" type="action" gid="19" x="864" y="384" width="32" height="32"/>
+  <object id="28" name="shaman" type="char" x="800" y="480" width="32" height="32">
+   <properties>
+    <property name="controlled" value="true"/>
+   </properties>
+  </object>
+  <object id="39" name="flappyflap" type="char" x="800" y="352" width="32" height="32"/>
+  <object id="50" name="box" type="move" gid="16" x="736" y="352" width="32" height="32"/>
+  <object id="53" name="box" type="move" gid="16" x="480" y="352" width="32" height="32"/>
+  <object id="54" name="box" type="move" gid="16" x="480" y="512" width="32" height="32"/>
+ </objectgroup>
+</map>

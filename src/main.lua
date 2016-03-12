@@ -1,5 +1,5 @@
 local love = love
-local camera = require 'lib.hump.camera'
+local vector = require 'lib.hump.vector'
 
 require "lib.util"
 
@@ -8,18 +8,16 @@ require "sfx"
 
 local debug = false
 
-local cam, levels, level, music
-
-local zoom = 2
+local levels, level, music
 
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
   love.graphics.setDefaultFilter("nearest")
 
   love.graphics.setNewFont( 10 )
-  cam = camera(0,0, zoom)
 
   levels = {
+    require "level.camdemo",
     require "level.01_test",
     require "level.tut3",
     require "level.tut4",
@@ -39,15 +37,13 @@ function love.load()
 
   music = love.audio.newSource( 'music/03 - Solxis - Rainforest.mp3', 'stream' )
   music:setLooping( true )
+  music:setVolume(.7)
   music:play()
 
 end
 
 function love.update(dt)
   level:update(dt)
-
-  -- FIXME where to? cameraQ
-  level.world.shake = math.max(0, (level.world.shake or 0) - dt)
 
   if level.finished then levels:next(); level = levels:load() end
   if level.dead then level = levels:load() end
@@ -91,18 +87,9 @@ end
 
 
 function love.draw()
-  cam:lookAt(love.graphics.getWidth()*.5/zoom,love.graphics.getHeight()*.5/zoom)
-  -- FIXME where to?
-  if level.world.shake then cam:move(math.random(-level.world.shake*2,level.world.shake*2),
-           math.random(-level.world.shake*13,level.world.shake*13)) -- FIXME decreasing amptitude, not random
-  end
-  cam:attach()
-  love.graphics.setColor(255, 255, 255, 255)
-  --love.graphics.scale(2)
-  --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
+
   level:draw()
   if debug then drawDebug() end
-  cam:detach()
 end
 
 function love.keypressed(key)

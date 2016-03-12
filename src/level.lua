@@ -3,10 +3,12 @@ local sti = require "lib.sti"
 local bump = require "lib.bump"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 local Signal = require 'lib.hump.signal'
+local camera = require 'lib.hump.camera'
 
 
 return require 'lib.hump.class' {
   -- XXX do I need classes? or just level data + level controller?
+
   gravity = vector(0,.1),
 
   -- new() and load() (call from load())
@@ -19,6 +21,10 @@ return require 'lib.hump.class' {
 
     self.world = bump.newWorld()
     self.map = sti.new(self.mapfile, { "bump" })
+    self.cam = camera(0, 0, 2)
+    self.cam.smoother = camera.smooth.damped(5) -- TODO do it nicer
+
+
 
     for _,obj in ipairs(self.map.layers.objects.objects) do
       local tile = self.map.tiles[obj.gid]
@@ -81,9 +87,14 @@ return require 'lib.hump.class' {
       self.world:add(o, o.x, o.y, o.width, o.height)
     end
 
-    if controlled then controlled.isControlled = true
-    elseif #self.chars > 0 then self.chars[1].isControlled = true
+    if controlled then
+      self.controlledChar = controlled
+    elseif #self.chars > 0 then
+      self.controlledChar = self.chars[1]
     end
+    self.controlledChar.isControlled = true
+    self.cam:lookAt(self.controlledChar.x, self.controlledChar.y)
+
   end,
 
   update = function(self, dt)
@@ -120,8 +131,7 @@ return require 'lib.hump.class' {
       end
       if o.grounded and not original.grounded then
         Signal.emit('object_landed', o)
-        -- FIXME store somewhere else than in "world"
-        self.world.shake = original.speed.y * .07 - .2 -- FIXME only for long jumps
+        self.cam.shake = original.speed.y * .07 - .2 -- FIXME only for long jumps
       elseif not o.grounded and original.grounded then Signal.emit('object_takeoff', o)
       end
 
@@ -131,6 +141,15 @@ return require 'lib.hump.class' {
 
     end
     end
+
+    --self.cam:lockWindow(self.controlledChar.x, self.controlledChar.y, 0,830,0,200)
+    self.cam:lockPosition(self.controlledChar.x, self.controlledChar.y)
+    self.cam.shake = math.max(0, (self.cam.shake or 0) - dt)
+
+    if self.cam.shake then self.cam:move(math.random(-self.cam.shake*4, self.cam.shake*4),
+             math.random(-self.cam.shake*30,self.cam.shake*30)) -- FIXME decreasing amptitude, not random
+    end
+
   end,
 
   getCollisionType = function(self, moving, other)
@@ -229,6 +248,7 @@ return require 'lib.hump.class' {
         if ch.isControlled then
           ch.isControlled = false
           self.chars[(k%#self.chars)+1].isControlled = true
+          self.controlledChar = self.chars[(k%#self.chars)+1]
           break
         end
       end
@@ -240,8 +260,13 @@ return require 'lib.hump.class' {
   end,
 
   draw = function(self)
+    self.cam:attach()
+    --love.graphics.setColor(255, 255, 255, 255)
+    --love.graphics.scale(2)
+    --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
     self.map:draw()
     for _,char in ipairs(self.chars) do char:draw() end
-  end
+    self.cam:detach()
+  end,
 
 }
