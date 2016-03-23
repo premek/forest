@@ -142,8 +142,12 @@ return require 'lib.hump.class' {
     end
     end
 
-    --self.cam:lockWindow(self.controlledChar.x, self.controlledChar.y, 0,830,0,200)
-    self.cam:lockPosition(self.controlledChar.x, self.controlledChar.y)
+    local camX, camY = self.controlledChar.x, self.controlledChar.y
+    --TODO do not show map edge -- local mapW = self.map.width * self.map.tilewidth
+
+    self.cam:lockWindow(camX, camY,
+         love.graphics:getWidth()/2 - 50, love.graphics:getWidth()/2 + 50,
+         love.graphics:getHeight()/2 - 100, love.graphics:getHeight()/2 + 100)
     self.cam.shake = math.max(0, (self.cam.shake or 0) - dt)
 
     if self.cam.shake then self.cam:move(math.random(-self.cam.shake*4, self.cam.shake*4),
@@ -267,6 +271,6 @@ return require 'lib.hump.class' {
     self.map:draw()
     for _,char in ipairs(self.chars) do char:draw() end
     self.cam:detach()
-  end,
+  end
 
 }

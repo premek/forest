@@ -33,12 +33,13 @@ For testing the **latest version from git**:
 
 ## Playing
 Controls for the demo:
-- arrows: move (different for each character)
-- tab: switch characters
-- space: drop the held item
-- Esc: quit
-- d: debug view
-- r: restart level
+- arrows - move (different for each character)
+- tab - switch characters
+- space - drop the held item
+- Esc - quit
+- d - debug view
+- r - restart level
+- . - next level
 
 
 ## Reporting Bugs

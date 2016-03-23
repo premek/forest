@@ -14,11 +14,11 @@ function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
   love.graphics.setDefaultFilter("nearest")
 
-  love.graphics.setNewFont( 10 )
+  love.graphics.setNewFont( 14 )
 
   levels = {
-    require "level.camdemo",
     require "level.01_test",
+    require "level.camdemo",
     require "level.tut3",
     require "level.tut4",
     require "level.01-02-test",
@@ -44,7 +44,7 @@ end
 
 function love.update(dt)
   level:update(dt)
-
+  -- TODO signals
   if level.finished then levels:next(); level = levels:load() end
   if level.dead then level = levels:load() end
 end
@@ -58,9 +58,9 @@ end
 
 
 local drawDebug = function()
-  love.graphics.setLineWidth(.5)
   love.graphics.setColor(0,255,0, 255)
   love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+  level.cam:attach()
 
   for _, v in ipairs(level.world:getItems()) do
     local b = v.layer and v.layer.name == "objects" and 255 or 0;
@@ -83,11 +83,12 @@ local drawDebug = function()
       end
     end
   end
+  level.cam:detach()
+
 end
 
 
 function love.draw()
-
   level:draw()
   if debug then drawDebug() end
 end
@@ -97,4 +98,6 @@ function love.keypressed(key)
   if key=='d' then debug = not debug end
   if key=='r' then level = levels:load() end
   if key=='escape' then love.event.quit() end
+  if key=='.' then levels:next(); level = levels:load() end
+
 end
