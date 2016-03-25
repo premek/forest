@@ -4,20 +4,27 @@ local vector = require 'lib.hump.vector'
 require "lib.util"
 
 require "sfx"
-local textboxes = require "textboxes"
-
 
 local debug = false
 
 local levels, level, music
+
+palette = {
+  {250,237,217}, --white
+  {128, 143, 18}, --light green
+  {42,92,11}, -- green
+  {4,38,8}, -- dark green
+  {234,42,21}, -- red
+}
 
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
   love.graphics.setDefaultFilter("nearest")
   font = {
     debug = love.graphics.setNewFont( 14 ),
-    talk = love.graphics.setNewFont( 18 ) -- TODO ttf
+    talk = love.graphics.setNewFont( 'font/SerreriaSobria.ttf', 10)
   }
+  font.talk:setFilter("nearest", "nearest", 0)
 
   levels = {
     require "level.01_test",
@@ -28,7 +35,7 @@ function love.load()
     require "level.demo2",
     require "level.02_test",
     require "level.99_last",
-    current = 1,
+    current = 5,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,
@@ -47,7 +54,6 @@ end
 
 function love.update(dt)
   level:update(dt)
-  textboxes:update(dt)
   -- TODO signals
   if level.finished then levels:next(); level = levels:load() end
   if level.dead then level = levels:load() end
@@ -95,7 +101,6 @@ end
 
 function love.draw()
   level:draw()
-  textboxes:draw()
   if debug then drawDebug() end
 end
 

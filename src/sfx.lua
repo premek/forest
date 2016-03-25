@@ -21,7 +21,7 @@ Signal.register('object_landed', function(obj)
       sfx.land_b.src:play()
     end
   end
-end)
+end) 
 
 Signal.register('object_takeoff', function(obj) obj.land_played = false end)
 

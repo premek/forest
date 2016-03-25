@@ -4,6 +4,7 @@ local bump = require "lib.bump"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 local Signal = require 'lib.hump.signal'
 local camera = require 'lib.hump.camera'
+local textboxes = require "textboxes"
 
 
 return require 'lib.hump.class' {
@@ -99,6 +100,7 @@ return require 'lib.hump.class' {
 
   update = function(self, dt)
     self.map:update(dt)
+    textboxes:update(dt)
     for _,o in ipairs(self.map.layers.objects.objects) do
     if o.speed and self.world:hasItem(o) then -- check if it was not removed in this same iteration by another item
 
@@ -270,6 +272,7 @@ return require 'lib.hump.class' {
     --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
     self.map:draw()
     for _,char in ipairs(self.chars) do char:draw() end
+    textboxes:draw()
     self.cam:detach()
   end
 
