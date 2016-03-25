@@ -4,6 +4,7 @@ local vector = require 'lib.hump.vector'
 require "lib.util"
 
 require "sfx"
+local textboxes = require "textboxes"
 
 
 local debug = false
@@ -13,8 +14,10 @@ local levels, level, music
 function love.load()
   if arg[#arg] == "-debug" then require("mobdebug").start() end
   love.graphics.setDefaultFilter("nearest")
-
-  love.graphics.setNewFont( 14 )
+  font = {
+    debug = love.graphics.setNewFont( 14 ),
+    talk = love.graphics.setNewFont( 18 ) -- TODO ttf
+  }
 
   levels = {
     require "level.01_test",
@@ -44,6 +47,7 @@ end
 
 function love.update(dt)
   level:update(dt)
+  textboxes:update(dt)
   -- TODO signals
   if level.finished then levels:next(); level = levels:load() end
   if level.dead then level = levels:load() end
@@ -59,6 +63,7 @@ end
 
 local drawDebug = function()
   love.graphics.setColor(0,255,0, 255)
+  love.graphics.setFont(font.debug);
   love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 10, 10)
   level.cam:attach()
 
@@ -90,6 +95,7 @@ end
 
 function love.draw()
   level:draw()
+  textboxes:draw()
   if debug then drawDebug() end
 end
 
