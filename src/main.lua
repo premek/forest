@@ -22,7 +22,7 @@ function love.load()
   love.graphics.setDefaultFilter("nearest")
   font = {
     debug = love.graphics.setNewFont( 14 ),
-    talk = love.graphics.setNewFont( 'font/SerreriaSobria.ttf', 10)
+    talk = love.graphics.setNewFont( 'font/SerreriaSobria.otf', 10)
   }
   font.talk:setFilter("nearest", "nearest", 0)
 
