@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="38" height="38" tilewidth="32" tileheight="32" nextobjectid="55">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="38" height="38" tilewidth="32" tileheight="32" nextobjectid="58">
  <tileset firstgid="1" name="green" tilewidth="32" tileheight="32">
   <image source="../../src/img/green.png" width="256" height="256"/>
   <terraintypes>
@@ -39,7 +39,7 @@
  </tileset>
  <layer name="sky" width="38" height="38">
   <data encoding="base64" compression="zlib">
-   eJztzsEJAAAIA7G6/9JuUQRzcP8kkq43pbm4uLi4uLi4uLi4uLi4Prkk9VvnqwKl
+   eJztw0ENAAAMA6Grf9NTsR8krJqqqqqqqj4/x6kFpQ==
   </data>
  </layer>
  <layer name="ground" width="38" height="38">
@@ -47,7 +47,7 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztls0KxDAIhEP3p91l+/6vu5tDoAxGo5nAHizMpQTzqaNkK6VsqVQqRdCbLAbTUfjfk8B1/iHXCqZZLuzf46dbR/fOWfzP5qr37I4c2r2vTh5aLA/Xp+jzhf1u51fsBsYcavlEubAHPa9EP8au0LwyIimnKBe77sgW4ZK8ZXlfywNnw5rvlZ5v9ZBiRXvo2amWf3qxGPWy8tNq4o01eg96QfKQxlV9f63nzM7FXW/V0fIQy2OYo9UT616MF+WqOoUYUS6Wz3r+8nDhvmPvr2t8fDdoXNoX7aHkBy2+hytaK22GGFyz74iR98PuOMt6r6ZSqVTVF1tgDbs=
+   eJztmNEOwiAMRcncnBr3/7/reFhSb6CFcpkkrkkfNKwcym0Hm0IIk9Nfwr0x2P4I33YfgCnmZxNMy+7rCXNqLnkOexc8V+PIkprzFxY1gToZwSLXc/cbwWcRd2mMxdSqzPuZtVlTDyV1wGDqUQ+tOe1Voy1cWKuanufMWPyfzWX19Nx7KVfvLTUn57K0jPt9jO9Rg4yeq63Hy4V7kNOK11h9ruXdkFqTl4udd2TzcKW0VXuewTUyzmwMzR/5SMXy7mFNT7X0k4vFyJe1Pi0nzLuA1utTGtK4ou5lPlt6LvZ6K4+WhlgawzVae2LNi/G8XNG3RAwvF0tnOX3VcGG/Y/cvGR/PDRqXZt49TOlBi1/D1Xo/L5kLuaxzqnzG6yXnhxXGyt/anbL394zSfI/wvefiurj+mUv2mdq+8AGrXA74
   </data>
  </layer>
  <objectgroup name="objects">
@@ -55,7 +55,7 @@
    <property name="collidable" value="true"/>
   </properties>
   <object id="7" name="finish" type="action" gid="19" x="864" y="384" width="32" height="32"/>
-  <object id="28" name="shaman" type="char" x="800" y="480" width="32" height="32">
+  <object id="28" name="shaman" type="char" x="544" y="32" width="32" height="32">
    <properties>
     <property name="controlled" value="true"/>
    </properties>
@@ -64,5 +64,8 @@
   <object id="50" name="box" type="move" gid="16" x="736" y="352" width="32" height="32"/>
   <object id="53" name="box" type="move" gid="16" x="480" y="352" width="32" height="32"/>
   <object id="54" name="box" type="move" gid="16" x="480" y="512" width="32" height="32"/>
+  <object id="55" name="box" type="move" gid="16" x="480" y="192" width="32" height="32"/>
+  <object id="56" name="box" type="move" gid="16" x="512" y="160" width="32" height="32"/>
+  <object id="57" name="box" type="move" gid="16" x="512" y="192" width="32" height="32"/>
  </objectgroup>
 </map>

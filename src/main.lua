@@ -1,5 +1,4 @@
 local love = love
-local vector = require 'lib.hump.vector'
 
 require "lib.util"
 
@@ -18,7 +17,6 @@ palette = {
 }
 
 function love.load()
-  if arg[#arg] == "-debug" then require("mobdebug").start() end
   love.graphics.setDefaultFilter("nearest")
   font = {
     debug = love.graphics.setNewFont( 14 ),
@@ -27,15 +25,16 @@ function love.load()
   font.talk:setFilter("nearest", "nearest", 0)
 
   levels = {
+    require "level.01_intro",
     require "level.01_test",
-    require "level.camdemo",
     require "level.tut3",
     require "level.tut4",
     require "level.01-02-test",
     require "level.demo2",
+    require "level.camdemo",
     require "level.02_test",
     require "level.99_last",
-    current = 5,
+    current = 1,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,

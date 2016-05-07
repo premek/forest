@@ -8,7 +8,7 @@ local show = function(text, pos)
   table.insert(boxes, {text = text, pos = pos})
 end
 
---Signal.register('char_say', function(char, message) show(char.name..": "..message) end)
+Signal.register('char_say', function(char, message) show(message, char) end)
 Signal.register('object-collected', function(char, obj) show("A " .. obj.name..", nice!", char) end)
 Signal.register('door-locked', function(door, char) show("It's locked", char) end)
 
@@ -18,7 +18,7 @@ return {
     for _,box in ipairs(boxes) do
       if box.text ~= box.lastText and box.text ~= "" then
         box.lastText = box.text
-        box.duration = math.max(0.2, box.text:len() * 0.1) -- time to read
+        box.duration = math.max(1, box.text:len() * 0.2) -- time to read
         box.time = box.duration
       end
       if box.time and box.time > 0 then

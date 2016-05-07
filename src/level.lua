@@ -4,6 +4,7 @@ local bump = require "lib.bump"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
 local Signal = require 'lib.hump.signal'
 local camera = require 'lib.hump.camera'
+local Timer = require "lib.hump.timer"
 local textboxes = require "textboxes"
 
 
@@ -11,6 +12,7 @@ return require 'lib.hump.class' {
   -- XXX do I need classes? or just level data + level controller?
 
   gravity = vector(0,.1),
+  scene = false,
 
   -- new() and load() (call from load())
   init = function(self)
@@ -22,8 +24,6 @@ return require 'lib.hump.class' {
 
     self.world = bump.newWorld()
     self.map = sti.new(self.mapfile, { "bump" })
-    self.cam = camera(0, 0, 2)
-    self.cam.smoother = camera.smooth.damped(5) -- TODO do it nicer
 
 
 
@@ -94,11 +94,49 @@ return require 'lib.hump.class' {
       self.controlledChar = self.chars[1]
     end
     self.controlledChar.isControlled = true
-    self.cam:lookAt(self.controlledChar.x, self.controlledChar.y)
+
+    -- camera
+    local camX,camY = self:getCameraPos(self.controlledChar)
+    self.cam = camera(camX, camY, 2)
+    self.cam.smoother = camera.smooth.damped(5) -- TODO do it nicer
+
+  Timer.script(function(wait)
+    self.scene = true
+    local cc = self.controlledChar
+    cc.isControlled = false
+    local orig_scale = self.cam.scale
+
+    Timer.tween(.8, self.cam, {scale = 6}, "in-out-sine")
+    wait(1)
+    Signal.emit("char_say", self.chars[1], "Hello")
+    wait(1)
+    self.lookAtChar = self.chars[2]
+    wait(.5)
+    Signal.emit("char_say", self.chars[2], "Hi")
+    wait(1)
+
+    Timer.tween(1, self.cam, {scale = orig_scale}, "in-out-sine")
+
+    cc.isControlled = true
+
+  end)
+
+
+
 
   end,
 
+  getCameraPos = function(self, lookAt)
+    local a = 64 / (self.cam and self.cam.scale or 2);
+    local b = (self.cam and self.cam.scale or 2) / 2
+    local camX = math.min(math.max(lookAt.x+16, a*7.5),a*(self.map.width*b-7.5))
+    local camY = math.min(math.max(lookAt.y+16, a*7.5),a*(self.map.height*b-7.5))
+    return camX, camY
+  end,
+
   update = function(self, dt)
+    Timer.update(dt)
+
     self.map:update(dt)
     textboxes:update(dt)
     for _,o in ipairs(self.map.layers.objects.objects) do
@@ -144,12 +182,9 @@ return require 'lib.hump.class' {
     end
     end
 
-    local camX, camY = self.controlledChar.x, self.controlledChar.y
-    --TODO do not show map edge -- local mapW = self.map.width * self.map.tilewidth
-
-    self.cam:lockWindow(camX, camY,
-         love.graphics:getWidth()/2 - 50, love.graphics:getWidth()/2 + 50,
-         love.graphics:getHeight()/2 - 100, love.graphics:getHeight()/2 + 100)
+    self.cam:lockPosition(self:getCameraPos(self.lookAtChar and self.lookAtChar or self.controlledChar))
+         --love.graphics:getWidth()/2 - 50, love.graphics:getWidth()/2 + 50,
+         --love.graphics:getHeight()/2 - 100, love.graphics:getHeight()/2 + 100)
     self.cam.shake = math.max(0, (self.cam.shake or 0) - dt)
 
     if self.cam.shake then self.cam:move(math.random(-self.cam.shake*4, self.cam.shake*4),
@@ -262,7 +297,7 @@ return require 'lib.hump.class' {
   end,
 
   keypressed = function(self, key)
-    if key=='tab' then self:switchPlayer() end
+    if key=='tab' and not self.scene then self:switchPlayer() end
   end,
 
   draw = function(self)
