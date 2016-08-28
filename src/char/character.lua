@@ -68,7 +68,7 @@ return require 'lib.hump.class' {
       self.facing or 1,
       1)
 
-    --[[
+
     if self.isControlled then
       love.graphics.setColor(255,255,255, 60-60*self.speed:len())
       love.graphics.setLineWidth(7)
@@ -83,7 +83,7 @@ return require 'lib.hump.class' {
         self.y  + self.width/2,
         self.width)
     end
-    ]]
+    
     --
     -- if false and self.isControlled then
     --   love.graphics.setColor(0,255,0)

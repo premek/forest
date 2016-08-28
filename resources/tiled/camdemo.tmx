@@ -47,7 +47,7 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmNEOwiAMRcncnBr3/7/reFhSb6CFcpkkrkkfNKwcym0Hm0IIk9Nfwr0x2P4I33YfgCnmZxNMy+7rCXNqLnkOexc8V+PIkprzFxY1gToZwSLXc/cbwWcRd2mMxdSqzPuZtVlTDyV1wGDqUQ+tOe1Voy1cWKuanufMWPyfzWX19Nx7KVfvLTUn57K0jPt9jO9Rg4yeq63Hy4V7kNOK11h9ruXdkFqTl4udd2TzcKW0VXuewTUyzmwMzR/5SMXy7mFNT7X0k4vFyJe1Pi0nzLuA1utTGtK4ou5lPlt6LvZ6K4+WhlgawzVae2LNi/G8XNG3RAwvF0tnOX3VcGG/Y/cvGR/PDRqXZt49TOlBi1/D1Xo/L5kLuaxzqnzG6yXnhxXGyt/anbL394zSfI/wvefiurj+mUv2mdq+8AGrXA74
+   eJztWF0PwiAMJHM6Ne7//13lYUm90Bb6YUhckz7MsHKUuxu4lFIWYz5JWmtE5718x20CTLU/e5EjY04pNTw0tFpcIpaROTOjcgJ5MkNUXI9PXgJyJXWvzlpbydHnL7U5oodXx/gITBl68PY0S6MeXKhVic8rMxZ/j8ZV55F0wn2XOL17NEfn0riM+32Mz9BghOdK67Hiwj3guGKNKJ/zfBtaa7Liiu47YrPganGrx8e5daA2NH1ncv7oR6uWdQ9HPFXjD1crol/a+qSeRN4FJK9vcUjCVXlP++nxXPR6rY8ah6I4hmvU9kSbF+tZcdXcGzWsuKJ4xvFrBBf6XbR/0fp4bpBwSWHdwxYfpPojuKy9kjSk4dLOqfQda/acHzYYS5+lO2XkHdHT7xn+7zlxnbj+GRf1mVFfeAM5zg6o
   </data>
  </layer>
  <objectgroup name="objects">

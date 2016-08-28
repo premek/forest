@@ -18,7 +18,7 @@ return {
     for _,box in ipairs(boxes) do
       if box.text ~= box.lastText and box.text ~= "" then
         box.lastText = box.text
-        box.duration = math.max(1, box.text:len() * 0.2) -- time to read
+        box.duration = math.max(1, box.text:len() * 0.1+.5) -- time to read
         box.time = box.duration
       end
       if box.time and box.time > 0 then
@@ -38,13 +38,13 @@ return {
         local alpha = 255 * math.min(alphaOut, alphaIn)
 
         -- TODO this can be done with a closure in the box
+        local _, lines = string.gsub(box.text.."\n", "\n", "")
         local w = font:getWidth(box.text)+22
-        local h = font:getHeight()+8
-        local x = box.pos.x - 2
+        local h = font:getHeight()*lines+8
+        local x = box.pos.x - w/2 +11
         local y = box.pos.y - h - 4
 
 
-          print(box.time, box.duration,alpha, alphaIn, alphaOut)
           love.graphics.setColor(palette[4][1], palette[4][2], palette[4][3], alpha)
           love.graphics.setLineWidth(2)
           --local x = box.x + self.width*0.2

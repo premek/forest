@@ -34,7 +34,7 @@ function love.load()
     require "level.camdemo",
     require "level.02_test",
     require "level.99_last",
-    current = 1,
+    current = 6,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,

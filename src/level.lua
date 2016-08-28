@@ -100,37 +100,15 @@ return require 'lib.hump.class' {
     self.cam = camera(camX, camY, 2)
     self.cam.smoother = camera.smooth.damped(5) -- TODO do it nicer
 
-  Timer.script(function(wait)
-    self.scene = true
-    local cc = self.controlledChar
-    cc.isControlled = false
-    local orig_scale = self.cam.scale
-
-    Timer.tween(.8, self.cam, {scale = 6}, "in-out-sine")
-    wait(1)
-    Signal.emit("char_say", self.chars[1], "Hello")
-    wait(1)
-    self.lookAtChar = self.chars[2]
-    wait(.5)
-    Signal.emit("char_say", self.chars[2], "Hi")
-    wait(1)
-
-    Timer.tween(1, self.cam, {scale = orig_scale}, "in-out-sine")
-
-    cc.isControlled = true
-
-  end)
-
-
-
+    if self.introCutscene then self:cutscene(self.introCutscene) end
 
   end,
 
   getCameraPos = function(self, lookAt)
     local a = 64 / (self.cam and self.cam.scale or 2);
     local b = (self.cam and self.cam.scale or 2) / 2
-    local camX = math.min(math.max(lookAt.x+16, a*7.5),a*(self.map.width*b-7.5))
-    local camY = math.min(math.max(lookAt.y+16, a*7.5),a*(self.map.height*b-7.5))
+    local camX = math.min(math.max(lookAt.x+16, a*6.5),a*(self.map.width*b-6.5)) -- FIXME!!!
+    local camY = math.min(math.max(lookAt.y+16, a*6.5),a*(self.map.height*b-6.5))
     return camX, camY
   end,
 
@@ -227,6 +205,7 @@ return require 'lib.hump.class' {
           if obj.id == other.id then table.remove(self.map.layers.objects.objects, k) end
         end
       elseif other.type == "move" then
+        Signal.emit("object-grabbed", moving, other)
         other.speed.x = other.speed.x - collision.normal.x * 0.5
         other.speed.y = other.speed.y - collision.normal.y *  0.5 -- dt? moving.speed?
         --moving.speed.x = moving.speed.x * 0.5
@@ -294,6 +273,32 @@ return require 'lib.hump.class' {
         end
       end
     end
+  end,
+
+  cutscene = function(self, scene)
+    if self.scene then return end
+    Timer.script(function(wait)
+
+      local say = function(who, what)
+                  self.lookAtChar = who
+                  wait(.5)
+                  Signal.emit("char_say", who, what)
+                  wait(what:len()*.1+.5)
+      end
+
+        self.scene = true
+        local cc = self.controlledChar
+        cc.isControlled = false
+        local orig_scale = self.cam.scale
+        Timer.tween(.5, self.cam, {scale = 3}, "in-out-sine")
+        wait(.5)
+        scene(self, say, wait)
+
+        Timer.tween(1, self.cam, {scale = orig_scale}, "in-out-sine")
+        cc.isControlled = true
+        self.scene = false
+
+    end)
   end,
 
   keypressed = function(self, key)
