@@ -11,8 +11,7 @@ before_install:
   - luarocks install --local lpeg
   - "`luarocks path`" # execute the luarocks output - sets the paths for 'local' tree
   # Use sed to replace the SSH URL with the public URL, then initialize submodules
-  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-  - git submodule update --init --recursive
+  - [[ -f .gitmodules ]] && sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules && git submodule update --init --recursive
 git:
     submodules: false # Handle git submodules yourself
 
