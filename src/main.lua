@@ -3,7 +3,6 @@ local love = love
 require "lib.util"
 
 require "sfx"
-
 local debug = false
 
 local levels, level, music
@@ -34,7 +33,7 @@ function love.load()
     require "level.camdemo",
     require "level.02_test",
     require "level.99_last",
-    current = 6,
+    current = 1,
     next = function(self)
       self.current = (self.current or 0) + 1
     end,
