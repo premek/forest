@@ -333,8 +333,9 @@ return require 'lib.hump.class' {
     --map:setDrawRange(0, 0, windowWidth, windowHeight) --culls unnecessary tiles
     self.map:draw()
     for _,char in ipairs(self.chars) do char:draw() end
-    textboxes:draw()
+    textboxes:draw(self.cam)
     self.cam:detach()
+
   end
 
 }
