@@ -6,6 +6,7 @@ local Signal = require 'lib.hump.signal'
 local camera = require 'lib.hump.camera'
 local Timer = require "lib.hump.timer"
 local textboxes = require "textboxes"
+local story = require "story"
 
 
 return require 'lib.hump.class' {
@@ -101,6 +102,8 @@ return require 'lib.hump.class' {
     self.cam.smoother = camera.smooth.damped(5) -- TODO do it nicer
 
     if self.introCutscene then self:cutscene(self.introCutscene) end
+
+    self:storyCutscene(self.name)
 
   end,
 
@@ -198,18 +201,23 @@ return require 'lib.hump.class' {
     -- general actions on objects
     if other.layer and other.layer.name == "objects" then
       --print("Object collision", moving.name, moving.type, ",", other.name, other.type)
-      if other.type == "collect" and moving.collect and moving:collect(other) then
-        self.world:remove(other)
-        Signal.emit("object-collected", moving, other)
-        for k, obj in ipairs(self.map.layers.objects.objects) do
-          if obj.id == other.id then table.remove(self.map.layers.objects.objects, k) end
+      if other.type == "collect" then
+        if moving.collect and moving:collect(other) then
+          self.world:remove(other)
+          for k, obj in ipairs(self.map.layers.objects.objects) do --FIXME eew
+            if obj.id == other.id then table.remove(self.map.layers.objects.objects, k) end
+          end
+          Signal.emit("object-collected", moving, other)
+          -- FIXME bird takes the item but it does not disappear - is it "collected"?
         end
+        if self.collected then self:collected(moving, other) end
       elseif other.type == "move" then
-        Signal.emit("object-grabbed", moving, other)
+        Signal.emit("object-moved", moving, other)
         other.speed.x = other.speed.x - collision.normal.x * 0.5
         other.speed.y = other.speed.y - collision.normal.y *  0.5 -- dt? moving.speed?
         --moving.speed.x = moving.speed.x * 0.5
         --moving.speed.y = moving.speed.y * 0.5
+        if self.moving then self:moving(moving, other) end
       elseif other.type == "action" then
         -- level specific actions
         self:globalActions(moving, other)
@@ -299,6 +307,19 @@ return require 'lib.hump.class' {
         self.scene = false
 
     end)
+  end,
+
+  storyCutscene = function(self, knotName)
+  if not knotName then return end
+   self:cutscene(function(lvl, say, wait)
+    story.choosePathString(knotName)
+    while story.canContinue do
+      local line = story.continue()
+      local actor, text = string.match(line, '^(%d+)%s*:%s*(.*)')
+      if actor == nil then text = line else actor = tonumber(actor) end
+      say(lvl.chars[actor], text) -- TODO use char names in story, not numbers
+    end
+   end)
   end,
 
   keypressed = function(self, key)

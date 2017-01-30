@@ -32,31 +32,24 @@ return {
   draw = function(self)
     for _,box in ipairs(boxes) do
       if box.time and box.time > 0 then
-        local font = font.talk
         local alphaIn = math.min(box.duration - box.time, fadeInTime) / fadeInTime
         local alphaOut = math.min(box.time, fadeOutTime) / fadeOutTime -- time is decreasing value
         local alpha = 255 * math.min(alphaOut, alphaIn)
-
-        -- TODO this can be done with a closure in the box
-        local _, lines = string.gsub(box.text.."\n", "\n", "")
-        local w = font:getWidth(box.text)+22
-        local h = font:getHeight()*lines+8
-        local x = box.pos.x - w/2 +11
-        local y = box.pos.y - h - 4
-
-
-          love.graphics.setColor(palette[4][1], palette[4][2], palette[4][3], alpha)
-          love.graphics.setLineWidth(2)
-          --local x = box.x + self.width*0.2
-          --local y = box.y - font.talk:getHeight() -7
-          love.graphics.rectangle("line", x, y, w, h)
-          love.graphics.setColor(palette[1][1], palette[1][2], palette[1][3], alpha)
-          --local x = box.x + self.width*0.2
-          --local y = box.y - font.talk:getHeight() -7
-          love.graphics.rectangle("fill", x, y, w, h)
-        love.graphics.setColor(palette[4][1], palette[4][2], palette[4][3], alpha)
+        local font = font.talk
         love.graphics.setFont(font);
-        love.graphics.print(box.text, x+11, y+5)
+        local w = math.min(font:getWidth(box.text), 130)
+        local _, lines = font:getWrap(box.text, w)
+        local h = font:getHeight() * #lines
+        local x = box.pos and (math.max(0, box.pos.x - w/2) + 10) or 10
+        local y = box.pos and (box.pos.y - h - 5) or 10
+        local bx, by = 4, 2
+        love.graphics.setColor(palette[4][1], palette[4][2], palette[4][3], alpha)
+        love.graphics.setLineWidth(2)
+        love.graphics.rectangle("line", x-bx, y-by-1, w+2*bx, h+2*by)
+        love.graphics.setColor(palette[1][1], palette[1][2], palette[1][3], alpha)
+        love.graphics.rectangle("fill", x-bx, y-by-1, w+2*bx, h+2*by)
+        love.graphics.setColor(palette[4][1], palette[4][2], palette[4][3], alpha)
+        love.graphics.printf(box.text, x, y, w, 'left')
       end
     end
   end,

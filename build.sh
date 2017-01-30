@@ -65,7 +65,7 @@ cd target/src
 
 # compile .ink story into lua table so the runtime will not need lpeg dep.
 for F in ink/*; do
-  lua lib/pink/pink/pink.lua parse $F/main.ink > $F/main.lua
+  lua lib/pink/pink/pink.lua parse $F/story.ink > $F/story.lua
 done
 
 zip -9 -r - . > "../${P}.love"

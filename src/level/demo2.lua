@@ -4,44 +4,28 @@ local Signal = require 'lib.hump.signal'
 return require 'lib.hump.class' {
   __includes = {require "level"},
 
+  saidThatAlready = false,
+
   mapfile = "map/demo2.lua",
 
-    action = function(self, char, item)
+    action = function(level, char, item)
       if char.name == "shaman" and item.name == "door" then
         if char.inventory.key then -- TODO inventory check
           char.inventory.key = nil
-          maputils.removeObjectsByName(self.map, self.world, "door")
+          maputils.removeObjectsByName(level.map, level.world, "door")
           Signal.emit("door-open", item, char)
         else
           Signal.emit("door-locked", item, char)
-
-          self:cutscene(function(slf, say, wait)
-            local bird = self.chars[2]
-            wait(2)
-            say(char, "How do I open this stupid door?")
-            say(char, "I don't see a key anywhere")
-            say(char, "I see a bird...")
-            say(char, "Hey! Bird!")
-            say(bird, "What?")
-            say(char, "What?")
-            say(bird, "What?")
-            say(char, "Talking bird, find me a key")
-            say(bird, "Sure")
-            say(bird, "Just press\nTab to\ncontroll me")
-            say(char, "What?")
-          end)
-
---[[
-          Signal.register('object-grabbed', function()
-            self:cutscene(function(slf, say, wait)
-            say(self.chars[2], "I can drop the key with space key")
-            say(self.chars[1], "What is the bird talking about?")
-            end)
-          end)
-]]
-
-
+          -- TODO wait here after door locked message
+          level:storyCutscene("demo2_door")
         end
+      end
+    end,
+
+    collected = function(level, char, item)
+      if char.name == 'flappyflap' and not level.saidThatAlready then
+        level.saidThatAlready = true -- FIXME eew
+        level:storyCutscene("demo2_bird_collect")
       end
     end,
 

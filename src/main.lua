@@ -24,12 +24,12 @@ function love.load()
   font.talk:setFilter("nearest", "nearest", 0)
 
   levels = {
-    require "level.01_intro",
-    require "level.01_test",
     require "level.tut3",
     require "level.tut4",
-    require "level.01-02-test",
     require "level.demo2",
+    require "level.01_intro",
+    require "level.01_test",
+    require "level.01-02-test",
     require "level.camdemo",
     require "level.02_test",
     require "level.99_last",
