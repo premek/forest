@@ -1,4 +1,4 @@
-local love = love
+local love = love -- Baby don´t hurt me
 local sti = require "lib.sti"
 local bump = require "lib.bump"
 local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
@@ -9,6 +9,10 @@ local textboxes = require "textboxes"
 local story = require "story"
 
 
+-- stop dialogs
+Signal.register('new_level', Timer.clear)
+
+
 return require 'lib.hump.class' {
   -- XXX do I need classes? or just level data + level controller?
 
@@ -17,6 +21,7 @@ return require 'lib.hump.class' {
 
   -- new() and load() (call from load())
   init = function(self)
+    Signal.emit('new_level', self, self.name, self.mapfile)
     print("Creating & loading level", self.mapfile)
 
     if not love.filesystem.exists(self.mapfile) then
@@ -282,6 +287,7 @@ return require 'lib.hump.class' {
       end
     end
   end,
+
 
   cutscene = function(self, scene)
     if self.scene then return end

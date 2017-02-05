@@ -9,7 +9,7 @@ r.levels = require.treeArray("level")
 
 r.current = 1
 r.next = function()
-  r.current = (r.current or 0) + 1
+  r.current = r.current + 1
 end
 r.load = function()
   return r.levels[r.current]() -- instantiate the level

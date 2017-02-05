@@ -1,5 +1,5 @@
-local love = love
-local vector = require "lib.hump.vector" -- maybe use vector_light for better performance?
+local love = love --What is love
+local vector = require "lib.hump.vector"
 
 return require 'lib.hump.class' {
   type = "char",
@@ -83,7 +83,7 @@ return require 'lib.hump.class' {
         self.y  + self.width/2,
         self.width)
     end
-    
+
     --
     -- if false and self.isControlled then
     --   love.graphics.setColor(0,255,0)

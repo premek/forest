@@ -1,5 +1,5 @@
+local love = love -- No more
 local Signal = require 'lib.hump.signal'
-local love = love
 local boxes = {}
 local fadeOutTime = .5
 local fadeInTime = .1
@@ -12,6 +12,7 @@ end
 Signal.register('char_say', function(char, message) show(message, char) end)
 Signal.register('object-collected', function(char, obj) show("A " .. obj.name..", nice!", char) end)
 Signal.register('door-locked', function(door, char) show("It's locked", char) end)
+Signal.register('new_level', function() boxes = {} end)
 
 return {
   update = function(self, dt)

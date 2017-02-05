@@ -1,8 +1,7 @@
-local love = love
+local love = love -- Don´t hurt me
 require "lib.util"
 require "lib.require"
-
-require "sfx" -- register signals, does not return
+require "sfx" -- register signals
 local game = require "game"
 
 function love.update(dt)

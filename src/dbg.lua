@@ -1,4 +1,4 @@
-local love=love
+local love=love -- Yeah
 local res = require "resources"
 
 local drawVector = function(r,g,b, w, x, y, v)
