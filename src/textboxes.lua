@@ -36,7 +36,7 @@ return {
       if box.time and box.time > 0 then
         local alphaIn = math.min(box.duration - box.time, fadeInTime) / fadeInTime
         local alphaOut = math.min(box.time, fadeOutTime) / fadeOutTime -- time is decreasing value
-        local alpha = 255 * math.min(alphaOut, alphaIn)
+        local alpha = math.min(alphaOut, alphaIn)
         local font = res.font.talk
         love.graphics.setFont(font);
         local w = math.min(font:getWidth(box.text), 130)

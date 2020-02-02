@@ -59,7 +59,7 @@ return require 'lib.hump.class' {
   end,
 
   draw = function(self)
-    love.graphics.setColor(255,255,255)
+    love.graphics.setColor(1,1,1)
     love.graphics.draw(self.image,
       self.quads[self.currentQuadNum],
       self.x+self.width/2-self.width/2*self.facing,
@@ -70,13 +70,13 @@ return require 'lib.hump.class' {
 
 
     if self.isControlled then
-      love.graphics.setColor(255,255,255, 60-60*self.speed:len())
+      love.graphics.setColor(1,1,1, (60-60*self.speed:len())/255)
       love.graphics.setLineWidth(7)
       love.graphics.circle("line",
         self.x + self.width/2,
         self.y  + self.width/2,
         self.width*.9)
-      love.graphics.setColor(0,0,0, 30-30*self.speed:len())
+      love.graphics.setColor(0,0,0, (30-30*self.speed:len())/299)
       love.graphics.setLineWidth(.5)
       love.graphics.circle("line",
         self.x + self.width/2,

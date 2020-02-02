@@ -24,7 +24,7 @@ return require 'lib.hump.class' {
     Signal.emit('new_level', self, self.name, self.mapfile)
     print("Creating & loading level", self.mapfile)
 
-    if not love.filesystem.exists(self.mapfile) then
+    if not love.filesystem.getInfo(self.mapfile) then
       error("File not found: ".. self.mapfile)
     end
 

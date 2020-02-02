@@ -1,10 +1,10 @@
 local res = {
   palette = {
-    {250,237,217}, --white
-    {128, 143, 18}, --light green
-    {42,92,11}, -- green
-    {4,38,8}, -- dark green
-    {234,42,21}, -- red
+    {250/255,237/255,217/255}, --white
+    {128/255, 143/255, 18/255}, --light green
+    {42/255,92/255,11/255}, -- green
+    {4/255,38/255,8/255}, -- dark green
+    {234/255,42/255,21/255}, -- red
   },
   font = {
     debug = love.graphics.setNewFont( 14 ),

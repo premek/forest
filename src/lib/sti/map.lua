@@ -111,7 +111,7 @@ end
 function Map:loadPlugins(plugins)
 	for _, plugin in ipairs(plugins) do
 		local p = pluginPath .. plugin .. ".lua"
-		if love.filesystem.isFile(p) then
+		if love.filesystem.getInfo(p, "file") then
 			local file = love.filesystem.load(p)()
 			for k, func in pairs(file) do
 				if not self[k] then
@@ -806,9 +806,9 @@ end
 -- @param layer The Layer to draw
 -- @return nil
 function Map:drawLayer(layer)
-	love.graphics.setColor(255, 255, 255, 255 * layer.opacity)
+	love.graphics.setColor(1, 1, 1, layer.opacity)
 	layer:draw()
-	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(1, 1, 1, 1)
 end
 
 --- Default draw function for Tile Layers
@@ -855,10 +855,10 @@ function Map:drawObjectLayer(layer)
 
 	assert(layer.type == "objectgroup", "Invalid layer type: " .. layer.type .. ". Layer must be of type: objectgroup")
 
-	local line   = { 160, 160, 160, 255 * layer.opacity       }
-	local fill   = { 160, 160, 160, 255 * layer.opacity * 0.2 }
-	local shadow = {   0,   0,   0, 255 * layer.opacity       }
-	local reset  = { 255, 255, 255, 255 * layer.opacity       }
+	local line   = { 0.6, 0.6, 0.6, layer.opacity       }
+	local fill   = { 0.6, 0.6, 0.6, layer.opacity * 0.2 }
+	local shadow = {   0,   0,   0, layer.opacity       }
+	local reset  = {   1,   1,   1, layer.opacity       }
 
 	local function sortVertices(obj)
 		local vertices = {{},{}}
