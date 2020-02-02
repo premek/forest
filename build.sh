@@ -4,7 +4,7 @@ set -x
 
 # defaults
 P="game"
-LV="0.10.2"
+LV="11.3"
 
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 while getopts "h?l:n:" opt; do
